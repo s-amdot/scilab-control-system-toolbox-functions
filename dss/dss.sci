@@ -27,7 +27,7 @@ Dependencies:
 function sys = dss(varargin)
     select argn(2)
     case 0 then
-        error("Wrong number of input arguments.");
+        error("cannot have 0 inputs");
     case 1 then
         sys = varargin(1);
         if isempty(sys.E) then
@@ -35,12 +35,10 @@ function sys = dss(varargin)
         end
     case 5 then
         sys = struct("A",varargin(1),"B",varargin(2),"C",varargin(3),"D",varargin(4),"E",varargin(5));
-
     case 6 then
         sys = struct("A",varargin(1),"B",varargin(2),"C",varargin(3),"D",varargin(4),"E",varargin(5),"tsam",varargin(6));
-
     else
-        error("Wrong number of input arguments.");
+        error("too many input arguments");
 
     end
 endfunction
