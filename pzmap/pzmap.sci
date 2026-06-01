@@ -1,3 +1,6 @@
+-----------IS NOT PLOTTING HENCE REDOING----------------
+
+
 
 // test case 1: first order system, one pole no zeros
 sys1     = syslin('c', 1 / (s + 3));
