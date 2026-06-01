@@ -20,7 +20,7 @@ $J = \sum_{k=0}^{\infty} (x_k^T Q x_k + u_k^T R u_k)$
 * **L** - $n \times 1$ vector of closed-loop system eigenvalues (i.e., eigenvalues of $A - BG$).
 
 ## Dependencies
-`dare` or equivalent algebraic Riccati equation solver.
+`riccati` or equivalent algebraic Riccati equation solver.
 
 ---
 
