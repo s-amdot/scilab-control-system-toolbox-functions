@@ -25,47 +25,86 @@ Dependencies:
       No external dependencies. Uses Scilab built-ins only.
 */
 
-function [g, x, l] = dlqr(varargin)
-
-  rhs = length(varargin);
-  if (rhs < 3 | rhs > 6) then
-    error ("dlqr: wrong number of input arguments");
+function [g, x, l] = dlqr(a, b, q, r, s, e)
+  if argn(2) < 3 | argn(2) > 6 then
+    error("dlqr: wrong number of input arguments");
   end
-
-  a = varargin(1); b = varargin(2); q = varargin(3);
-  r = []; s = []; e = [];
-  if (rhs >= 4) then r = varargin(4); end
-  if (rhs >= 5) then s = varargin(5); end
-  if (rhs == 6) then e = varargin(6); end
-
-  if (typeof(a) == "st" & isfield(a, "A")) then
-    s = r; r = q; q = b;
-    tsam = a.dt; e = a.E; b = a.B; a = a.A;
-  elseif (rhs < 4) then
-    error ("dlqr: missing input arguments");
+  if typeof(a) == "state-space" then
+    s = r;
+    r = q;
+    q = b;
+    [a, b, c, d, e, tsam] = dssdata(a, []);
+  elseif argn(2) < 4 then
+    error("dlqr: wrong number of input arguments");
   else
-    tsam = 1;
+    tsam = 1;  
   end
 
-  if (isempty(r)) then r = eye(size(b, 2), size(b, 2)); end
-  if (isempty(s)) then s = zeros(size(a, 1), size(b, 2)); end
-  if (isempty(e)) then e = eye(size(a, 1), size(a, 1)); end
-
-  q_m = q - s * inv(r) * s';
-  a_m = a - b * inv(r) * s';
-  r_m = b * inv(r) * b';
-
-  if (tsam <> "c" & tsam <> 0) then
-    x = riccati(a_m, r_m, q_m, "d");
-    g = inv(r + b' * x * b) * (b' * x * a + s');
+  if tsam > 0 then
+    [x, g] = riccati(a,b*inv(r)*b',q,"d");
+    g = inv(r+b'*x*b)*(b'*x*a);
   else
-    x = riccati(a_m, r_m, q_m, "c");
-    g = inv(r) * (b' * x * e + s');
+    [x, g] = riccati(a,b*inv(r)*b',q,"c");
+    g = inv(r)*b'*x;
   end
-  
-  l = spec(a - b * g);
-
+  l = spec(a-b*g);
 endfunction
+
+// TEST CASE 1 (standard 2D systems (identity weights))
+A1 = [0, 1; -2, 3];
+B1 = [0; 1];
+Q1 = [1, 0; 0, 1];
+R1 = [1];
+[G1, X1, L1] = dlqr(A1, B1, Q1, R1);
+disp("Test Case 1: Gain G:");
+disp(G1);
+disp("Test Case 1: Riccati X:");
+disp(X1);
+disp("Test Case 1: Closed loop L:");
+disp(L1);
+
+
+// TEST CASE 2 (double integrator (unstable/marginal open loop))
+A2 = [0, 1; 0, 0];
+B2 = [0; 1];
+Q2 = [1, 0; 0, 1];
+R2 = [0.1];
+[G2, X2, L2] = dlqr(A2, B2, Q2, R2);
+disp("Test Case 2: Gain G:");
+disp(G2);
+disp("Test Case 2: Riccati X:");
+disp(X2);
+disp("Test Case 2: Closed loop L:");
+disp(L2);
+
+
+// TEST CASE 3 (stable 2D systems)
+A3 = [0, 1; -2, -3];
+B3 = [1; 1];
+Q3 = [2, 0; 0, 2];
+R3 = [0.5];
+[G3, X3, L3] = dlqr(A3, B3, Q3, R3);
+disp("Test Case 3: Gain G:");
+disp(G3);
+disp("Test Case 3: Riccati X:");
+disp(X3);
+disp("Test Case 3: Closed loop L:");
+disp(L3);
+
+
+// TEST CASE 4 (3D system higher order)
+A4 = [0, 1, 0; 0, 0, 1; -1, -5, -6];
+B4 = [0; 0; 1];
+Q4 = [1, 0, 0; 0, 1, 0; 0, 0, 1];
+R4 = [1];
+[G4, X4, L4] = dlqr(A4, B4, Q4, R4);
+disp("Test Case 4: Gain G:");
+disp(G4);
+disp("Test Case 4: Riccati X:");
+disp(X4);
+disp("Test Case 4: Closed loop L:");
+disp(L4);
+
 
 
 //----------------------------------------------------------------------------------------------------------------------------------//
