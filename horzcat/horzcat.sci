@@ -1,3 +1,30 @@
+/* 2026 Author: Samiksha <samikshaa18@gmail.com>
+horzcat.sci
+concatenates input arguments horizontally.
+*/
+
+/*
+Description:
+      Performs horizontal concatenation of input arguments.
+      This function is a simple wrapper around Scilab's built-in cat()
+      function with dimension set to 2, allowing multiple inputs to be
+      stacked column-wise in a consistent manner.
+
+      It accepts a variable number of input arguments and concatenates
+      them along the second dimension (columns).
+
+Calling Sequence:
+      dat = horzcat(A, B, C, ...)
+      dat = horzcat(varargin)
+
+Parameters:
+      varargin - variable number of input matrices/vectors to be concatenated
+      dat      - resulting horizontally concatenated matrix
+
+Dependencies:
+      Uses Scilab built-in function cat().
+*/
+
 function dat = horzcat(varargin)
 
     dat = cat(2, varargin(:));
