@@ -62,26 +62,20 @@ C1 = [1, 0];
 D1 = [0];
 E1 = [2, 1; 0, 3];
 sys1 = dss(A1, B1, C1, D1, E1);
-disp("test case 1: 2x2 continuous descriptor system");
-disp("A:");
-disp(A1);
-disp("E:");
-disp(E1);
+disp("test case 1: ");
+disp(sys1);
 
-// test case 2: 
+// test case 2:
 A2 = [0, 1; -2, -3];
 B2 = [0; 1];
 C2 = [1, 0];
 D2 = [0];
 E2 = eye(2, 2);
 sys2 = dss(A2, B2, C2, D2, E2);
-disp("test case 2: identity e (equivalent to standard ss)");
-disp("E equals identity:");
-disp(E2);
-disp("B:");
-disp(B2);
+disp("test case 2: ");
+disp(sys2);
 
-// test case 3: 
+// test case 3:
 A3 = [0.5, 0.1; 0, 0.9];
 B3 = [1; 1];
 C3 = [1, 0];
@@ -89,9 +83,8 @@ D3 = [0];
 E3 = [1, 0.2; 0, 1];
 tsam3 = 0.01;
 sys3 = dss(A3, B3, C3, D3, E3, tsam3);
-disp("test case 3: discrete time descriptor system with tsam = 0.01");
-disp("E:");
-disp(E3);
+disp("test case 3: ");
+disp(sys3);
 
 // test case 4:
 A4 = [0, 1, 0; 0, 0, 1; -6, -11, -6];
@@ -100,21 +93,16 @@ C4 = [1, 0, 0];
 D4 = [0];
 E4 = [2, 0, 0; 0, 1, 0; 0, 0, 3];
 sys4 = dss(A4, B4, C4, D4, E4);
-disp("test case 4: 3rd order descriptor system with diagonal e");
-disp("A:");
-disp(A4);
-disp("E:");
-disp(E4);
-disp("C:");
-disp(C4);
+disp("test case 4: ");
+disp(sys4);
 
 // test case 5: invalid descriptor system (dimension mismatch → should error)
 A5 = [1 0; 0 2];
 B5 = [1; 1];
 C5 = [1 1];
-D5 = [0 0];  
+D5 = [0 0];
 E5 = eye(2,2);
-disp("Test 5: expecting ERROR due to invalid D dimension");
+disp("test case 5: ");
 sys5 = dss(A5, B5, C5, D5, E5);
 disp(sys5);
 
@@ -126,13 +114,8 @@ D6 = [0];
 E6 = [2, 0; 0, 1];
 tsam6 = 0.1;
 sys6 = dss(A6, B6, C6, D6, E6, tsam6);
-disp("test case 6: discrete descriptor system with tsam = 0.1");
-disp("A:");
-disp(A6);
-disp("E:");
-disp(E6);
-disp("tsam:");
-disp(tsam6);
+disp("test case 6: ");
+disp(sys6);
 
 // test case 7:
 A7 = [0.9, 0.1; -0.2, 0.95];
@@ -142,10 +125,5 @@ D7 = [0];
 E7 = [1, 0.5; 0, 1];
 tsam7 = 0.05;
 sys7 = dss(A7, B7, C7, D7, E7, tsam7);
-disp("test case 7: discrete descriptor system (marginal stability)");
-disp("A:");
-disp(A7);
-disp("E:");
-disp(E7);
-disp("tsam:");
-disp(tsam7);
+disp("test case 7: ");
+disp(sys7);
