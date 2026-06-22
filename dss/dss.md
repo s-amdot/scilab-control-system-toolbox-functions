@@ -23,158 +23,146 @@
 
 ## Dependencies
 
-none
+__sys_data__
+
 
 ## Examples
 
 ## 1
 
 ```
-A = [1, 2; 3, 4];
-B = [1; 0];
-C = [1, 0];
-D = [0];
-E = [2, 1; 0, 3];
-sys = dss(A, B, C, D, E);
-disp(sys.E);
+// test case 1:
+A1 = [1, 2; 3, 4]; B1 = [1; 0]; C1 = [1, 0]; D1 = [0]; E1 = [2, 1; 0, 3];
+sys1 = dss(A1, B1, C1, D1, E1);
+disp("test case 1: ");
+disp("A1:", A1);
+disp("E1:", E1);
 ```
-
 ```
-sys1 =
-    A =
-       1   2
-       3   4
-    B =
-       1
-       0
-    C =
-       1   0
-    D = 0
-    E =
-       2   1
-       0   3
-    dt = 0
+"test case 1: "
+ "A1:"
+   1.   2.
+   3.   4.
+  "E1:"
+   2.   1.
+   0.   3.
 ```
 
 ## 2
 
 ```
-A2 = [0, 1; -2, -3]; 
-B2 = [0; 1]; 
-C2 = [1, 0]; 
-D2 = [0]; 
-E2 = eye(2, 2);
-sys2 = dss(A2, B2, C2, D2, E2)
+A2 = [0, 1; -2, -3];B2 = [0; 1];C2 = [1, 0];D2 = [0];E2 = eye(2, 2);
+sys2 = dss(A2, B2, C2, D2, E2);
+disp("test case 2: ");
+disp("E2:", E2);
+disp("B2:", B2);
 ```
-
 ```
-sys2 =
-  scalar structure containing the fields:
-    A =
-       0   1
-      -2  -3
-    B =
-       0
-       1
-    C =
-       1   0
-    D = 0
-    E =
-       1   0
-       0   1
-    dt = 0
+"test case 2: "
+"E2:"
+ 1.   0.
+ 0.   1.
+"B2:"
+ 0.
+ 1.
 ```
 
 ## 3
 
 ```
-A3 = [0.5, 0.1; 0, 0.9]; 
-B3 = [1; 1]; 
-C3 = [1, 0]; 
-D3 = [0]; 
-E3 = [1, 0.2; 0, 1];
-tsam3 = 0.01;
-sys3 = dss(A3, B3, C3, D3, E3, tsam3)
+A3 = [0.5, 0.1; 0, 0.9]; B3 = [1; 1]; C3 = [1, 0]; D3 = [0]; E3 = [1, 0.2; 0, 1]; tsam3 = 0.01;
+sys3 = dss(A3, B3, C3, D3, E3, tsam3);
+disp("test case 3: ");
+disp("E3:", E3);
 ```
-
 ```
-sys3 =
-    A =
-       0.5000   0.1000
-       0.0000   0.9000
-    B =
-       1
-       1
-    C =
-       1   0
-    D = 0
-    E =
-       1.0000   0.2000
-       0.0000   1.0000
-    dt = 0.0100
+"test case 3: "
+"E3:"
+   1.   0.2
+   0.   1. 
 ```
 
 ## 4
 
 ```
-A4 = [0, 1, 0; 0, 0, 1; -6, -11, -6]; 
-B4 = [0; 0; 1]; 
-C4 = [1, 0, 0]; 
-D4 = [0]; 
-E4 = [2, 0, 0; 0, 1, 0; 0, 0, 3];
-sys4 = dss(A4, B4, C4, D4, E4)
-
+A4 = [0, 1, 0; 0, 0, 1; -6, -11, -6]; B4 = [0; 0; 1]; C4 = [1, 0, 0]; D4 = [0]; E4 = [2, 0, 0; 0, 1, 0; 0, 0, 3];
+sys4 = dss(A4, B4, C4, D4, E4);
+disp("test case 4:");
+disp("A4:", A4);
+disp("E4:", E4);
+disp("C4:", C4);
 ```
-
 ```
-sys4 =
-  scalar structure containing the fields:
-    A =
-       0   1   0
-       0   0   1
-      -6 -11  -6
-    B =
-       0
-       0
-       1
-    C =
-       1   0   0
-    D = 0
-    E =
-       2   0   0
-       0   1   0
-       0   0   3
-    dt = 0
+"test case 4: "
+ "A4:"
+   0.   1.    0.
+   0.   0.    1.
+  -6.  -11.  -6.
+  "E4:"
+   2.   0.   0.
+   0.   1.   0.
+   0.   0.   3.
+  "C4:"
+   1.   0.   0.
 ```
 
 ## 5
 
 ```
-sys_in = struct();
-sys_in.A = [1, 0; 0, 2]; 
-sys_in.B = [1; 1]; 
-sys_in.C = [1, 1]; 
-sys_in.D = [0]; 
-sys_in.E = []; 
-sys_in.dt = 0;
-sys5 = dss(sys_in)
-
+A5 = [1 0; 0 2]; B5 = [1; 1]; C5 = [1 1]; D5 = [0 0]; E5 = eye(2,2);
+disp("test case 5: EXPECTING ERROR (invalid D dimension)");
+sys5 = dss(A5, B5, C5, D5, E5);
+disp(sys5);
+```
+```
+"test case 5: "
+syslin: Incompatible input arguments #3 and #5: Same column dimensions expected.
 ```
 
+## 6
+
 ```
-sys5 =
-  scalar structure containing the fields:
-    A =
-       1   0
-       0   2
-    B =
-       1
-       1
-    C =
-       1   1
-    D = 0
-    E =
-       1   0
-       0   1
-    dt = 0
+A6 = [1.2, 0.3; 0.0, 0.8]; B6 = [1; 0]; C6 = [1, 0]; D6 = [0];
+E6 = [2, 0; 0, 1]; tsam6 = 0.1;
+sys6 = dss(A6, B6, C6, D6, E6, tsam6);
+disp("test case 6:");
+disp("A6:", A6);
+disp("B6:", B6);
+disp("C6:", C6);
+disp("E6:", E6);
+disp("tsam6:", tsam6);
+```
+```
+"test case 6: "
+"A6:"
+   1.2   0.3
+   0.    0.8
+"E6:"
+   2.   0.
+   0.   1.
+"tsam6:"
+   0.1
+```
+
+## 7
+
+```
+A7 = [0.9, 0.1; -0.2, 0.95]; B7 = [0; 1]; C7 = [1, 1]; D7 = [0];
+E7 = [1, 0.5; 0, 1]; tsam7 = 0.05;
+sys7 = dss(A7, B7, C7, D7, E7, tsam7);
+disp("test case 7:");
+disp("A7:", A7);
+disp("E7:", E7);
+disp("tsam7:", tsam7);
+```
+```
+  "test case 7: "
+  "A7:"
+   0.9   0.1 
+  -0.2   0.95
+  "E7:"
+   1.   0.5
+   0.   1. 
+  "tsam7:"
+   0.05
 ```
