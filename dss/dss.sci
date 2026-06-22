@@ -12,7 +12,7 @@ Calling Sequence:
       sys = dss(A, B, C, D, E)
       sys = dss(A, B, C, D, E, tsam)
 Dependencies:
-      __sys_data__
+      __sys_data__ (given below)
 */
 
 function [a, b, c, d, e] = __sys_data__(sys)
@@ -40,10 +40,7 @@ function sys = dss(varargin)
         e = E;
 
     case 6 then
-        A = varargin(1); B = varargin(2);
-        C = varargin(3); D = varargin(4);
-        E = varargin(5);
-        tsam = varargin(6);
+        A = varargin(1); B = varargin(2); C = varargin(3); D = varargin(4); E = varargin(5); tsam = varargin(6);
         if tsam == 0 then
             sys = syslin("c", A, B, C, D);
         else
@@ -56,9 +53,9 @@ function sys = dss(varargin)
     end
 
 endfunction
-//---------------------------------------------------------------------------------------------------------------------------------------//
 
-// test case 1: simple 2x2 continuous descriptor system with non-identity e
+// ------------------------------------------------------------------------------------------------------------------------------------------------//
+// test case 1:
 A1 = [1, 2; 3, 4];
 B1 = [1; 0];
 C1 = [1, 0];
@@ -70,9 +67,8 @@ disp("A:");
 disp(A1);
 disp("E:");
 disp(E1);
-disp("----------------------------------------------------------------------------------------------------------------------------------");
 
-// test case 2: identity e reduces to standard state-space
+// test case 2: 
 A2 = [0, 1; -2, -3];
 B2 = [0; 1];
 C2 = [1, 0];
@@ -84,9 +80,8 @@ disp("E equals identity:");
 disp(E2);
 disp("B:");
 disp(B2);
-disp("----------------------------------------------------------------------------------------------------------------------------------");
 
-// test case 3: discrete time descriptor system with tsam
+// test case 3: 
 A3 = [0.5, 0.1; 0, 0.9];
 B3 = [1; 1];
 C3 = [1, 0];
@@ -97,9 +92,8 @@ sys3 = dss(A3, B3, C3, D3, E3, tsam3);
 disp("test case 3: discrete time descriptor system with tsam = 0.01");
 disp("E:");
 disp(E3);
-disp("----------------------------------------------------------------------------------------------------------------------------------");
 
-// test case 4: 3rd order descriptor system
+// test case 4:
 A4 = [0, 1, 0; 0, 0, 1; -6, -11, -6];
 B4 = [0; 0; 1];
 C4 = [1, 0, 0];
@@ -113,18 +107,45 @@ disp("E:");
 disp(E4);
 disp("C:");
 disp(C4);
-disp("----------------------------------------------------------------------------------------------------------------------------------");
 
-// test case 5: conversion form dss(sys) where e is empty, should be replaced by identity
-A5 = [1, 0; 0, 2];
+// test case 5: invalid descriptor system (dimension mismatch → should error)
+A5 = [1 0; 0 2];
 B5 = [1; 1];
-C5 = [1, 1];
-D5 = [0];
-E5 = [];
-sys5 = dss(A5, B5, C5, D5, E5)
-disp("test case 5: conversion from struct with empty e, expects e = eye(2)");
-disp("E:");
-disp(E5);
+C5 = [1 1];
+D5 = [0 0];  
+E5 = eye(2,2);
+disp("Test 5: expecting ERROR due to invalid D dimension");
+sys5 = dss(A5, B5, C5, D5, E5);
+disp(sys5);
+
+// test case 6:
+A6 = [1.2, 0.3; 0.0, 0.8];
+B6 = [1; 0];
+C6 = [1, 0];
+D6 = [0];
+E6 = [2, 0; 0, 1];
+tsam6 = 0.1;
+sys6 = dss(A6, B6, C6, D6, E6, tsam6);
+disp("test case 6: discrete descriptor system with tsam = 0.1");
 disp("A:");
-disp(A5);
-disp("----------------------------------------------------------------------------------------------------------------------------------");
+disp(A6);
+disp("E:");
+disp(E6);
+disp("tsam:");
+disp(tsam6);
+
+// test case 7:
+A7 = [0.9, 0.1; -0.2, 0.95];
+B7 = [0; 1];
+C7 = [1, 1];
+D7 = [0];
+E7 = [1, 0.5; 0, 1];
+tsam7 = 0.05;
+sys7 = dss(A7, B7, C7, D7, E7, tsam7);
+disp("test case 7: discrete descriptor system (marginal stability)");
+disp("A:");
+disp(A7);
+disp("E:");
+disp(E7);
+disp("tsam:");
+disp(tsam7);
