@@ -11,17 +11,8 @@ Calling Sequence:
       sys = dss(sys_in)
       sys = dss(A, B, C, D, E)
       sys = dss(A, B, C, D, E, tsam)
-Parameters:
-      A       - n x n system matrix
-      B       - n x m input matrix
-      C       - p x n output matrix
-      D       - p x m feedthrough matrix
-      E       - n x n descriptor matrix (identity assumed if omitted in struct conversion)
-      tsam    - sampling time in seconds, 0 for continuous (optional, default = 0)
-      sys_in  - state-space system struct with missing or empty E field
-      sys     - output system structure with fields .A .B .C .D .E .dt
 Dependencies:
-      No external dependencies. Uses Scilab built-ins only.
+      __sys_data__
 */
 
 function [a, b, c, d, e] = __sys_data__(sys)
