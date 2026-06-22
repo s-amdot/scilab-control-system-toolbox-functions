@@ -1,7 +1,7 @@
 /* 2026 Author: Samiksha <samikshaa18@gmail.com> */
 
 /* obsvf.sci
-   Observable staircase form decomposition */
+   observable staircase form decomposition */
 
 /*
 Description:
@@ -17,41 +17,9 @@ Calling Sequence:
       [Ao, Bo, Co, T, nobsv] = obsvf(A, B, C)
       [Ao, Bo, Co, T, nobsv] = obsvf(A, B, C, tol)
 
-Parameters:
-      A - n x n state matrix
-      B - n x m input matrix
-      C - p x n output matrix
-      tol - tolerance used for rank determination(optional)
-      Ao - transformed state matrix in observable form
-      Bo - transformed input matrix
-      Co - transformed output matrix
-      T - state transformation matrix
-      nobsv - number of observable states
-
 Dependencies:
       https://github.com/yeoleparesh/Control-system/blob/master/ctrbf.sci
 */
-
-function [ac, bc, cc, z, ncont] = obsvf(a, b, c, tol)
-
-    if argn(2)<3 | argn(2)>4 then
-        error("obsvf: wrong number of arguments");
-    end
-
-    if argn(2)<4 then
-        tol = %eps;
-    end
-
-    [ad, bd, cd, z, k] = ctrbf(a.', c.', b.', tol);
-
-    ac = ad.';
-    bc = cd.';
-    cc = bd.';
-
-    ncont = sum(k);
-
-endfunction
-
 
 function [ac, bc, cc, z, ncont] = obsvf(a, b, c, tol)
     if argn(2)<1|argn(2)>4 then 
@@ -85,24 +53,28 @@ endfunction
 // Test 1: simple 2x2 fully observable
 A = [1 1; 0 2]; B = [0; 1]; C = [1 0];
 [Ao, Bo, Co, T, no] = obsvf(A, B, C);
-disp(no, "T1 nobsv:"); disp(Ao, "T1 Ao:");
+disp("T1 nobsv:", no); disp("T1 Ao:", Ao);
 
 // Test 2: unobservable mode
 A = [1 0; 0 2]; B = [1; 1]; C = [1 0];
 [Ao, Bo, Co, T, no] = obsvf(A, B, C);
-disp(no, "T2 nobsv:"); disp(Co, "T2 Co:");
+disp("T2 nobsv:", no); disp("T2 Co:", Co);
 
 // Test 3: with tolerance
 A = [-1 1; 0 -2]; B = [1; 0]; C = [0 1];
 [Ao, Bo, Co, T, no] = obsvf(A, B, C, 1e-8);
-disp(no, "T3 nobsv:"); disp(T, "T3 T:");
+disp("T3 nobsv:", no); disp("T3 T:", T);
 
 // Test 4: 3x3 system
 A = [0 1 0; 0 0 1; -6 -11 -6]; B = [0; 0; 1]; C = [1 0 0];
 [Ao, Bo, Co, T, no] = obsvf(A, B, C);
-disp(no, "T4 nobsv:"); disp(Ao, "T4 Ao:");
+disp("T4 nobsv:", no); disp("T4 Ao:", Ao);
 
-// Test 5: completely unobservable system
-A = [1 0; 0 2]; B = [1;1];C = [0 0];
+// Test 5: repeated eigenvalue, partially observable system
+A = [2 1 0;0 2 1;0 0 2];
+B = [1; 0; 1];
+C = [1 0 0];
 [Ao, Bo, Co, T, no] = obsvf(A, B, C);
-disp(no, "T5 nobsv:");disp(Ao, "T5 Ao:");disp(Co, "T5 Co:");
+disp("T5 nobsv:", no);
+disp("T5 Ao:", Ao);
+disp("T5 T:", T);
