@@ -24,25 +24,47 @@ Dependencies:
       No external dependencies. Uses Scilab built-ins only.
 */
 
+function [a, b, c, d, e] = __sys_data__(sys)
+  a = sys.a;
+  b = sys.b;
+  c = sys.c;
+  d = sys.d;
+  e = []; 
+endfunction
+
 function sys = dss(varargin)
     select argn(2)
     case 0 then
-        error("cannot have 0 inputs");
+        error("Wrong number of input arguments.");
     case 1 then
-        sys = varargin(1);
-        if isempty(sys.E) then
-            sys.E = eye(size(sys.A));
+        sys = syslin("c", varargin(1));
+        [a, b, c, d, e] = __sys_data__(sys);
+        if isempty(e) then
+            e = eye(size(a, 1), size(a, 2));
         end
+
     case 5 then
-        sys = struct("A",varargin(1),"B",varargin(2),"C",varargin(3),"D",varargin(4),"E",varargin(5));
+        A = varargin(1); B = varargin(2); C = varargin(3); D = varargin(4); E = varargin(5);
+        sys = syslin("c", A, B, C, D);
+        e = E;
+
     case 6 then
-        sys = struct("A",varargin(1),"B",varargin(2),"C",varargin(3),"D",varargin(4),"E",varargin(5),"tsam",varargin(6));
+        A = varargin(1); B = varargin(2);
+        C = varargin(3); D = varargin(4);
+        E = varargin(5);
+        tsam = varargin(6);
+        if tsam == 0 then
+            sys = syslin("c", A, B, C, D);
+        else
+            sys = syslin(tsam, A, B, C, D);
+        end
+        e = E;
+    
     else
-        error("too many input arguments");
-
+        error("Wrong number of input arguments.");
     end
-endfunction
 
+endfunction
 //---------------------------------------------------------------------------------------------------------------------------------------//
 
 // test case 1: simple 2x2 continuous descriptor system with non-identity e
@@ -54,9 +76,9 @@ E1 = [2, 1; 0, 3];
 sys1 = dss(A1, B1, C1, D1, E1);
 disp("test case 1: 2x2 continuous descriptor system");
 disp("A:");
-disp(sys1.A);
+disp(A1);
 disp("E:");
-disp(sys1.E);
+disp(E1);
 disp("----------------------------------------------------------------------------------------------------------------------------------");
 
 // test case 2: identity e reduces to standard state-space
@@ -68,9 +90,9 @@ E2 = eye(2, 2);
 sys2 = dss(A2, B2, C2, D2, E2);
 disp("test case 2: identity e (equivalent to standard ss)");
 disp("E equals identity:");
-disp(sys2.E);
+disp(E2);
 disp("B:");
-disp(sys2.B);
+disp(B2);
 disp("----------------------------------------------------------------------------------------------------------------------------------");
 
 // test case 3: discrete time descriptor system with tsam
@@ -83,7 +105,7 @@ tsam3 = 0.01;
 sys3 = dss(A3, B3, C3, D3, E3, tsam3);
 disp("test case 3: discrete time descriptor system with tsam = 0.01");
 disp("E:");
-disp(sys3.E);
+disp(E3);
 disp("----------------------------------------------------------------------------------------------------------------------------------");
 
 // test case 4: 3rd order descriptor system
@@ -95,28 +117,23 @@ E4 = [2, 0, 0; 0, 1, 0; 0, 0, 3];
 sys4 = dss(A4, B4, C4, D4, E4);
 disp("test case 4: 3rd order descriptor system with diagonal e");
 disp("A:");
-disp(sys4.A);
+disp(A4);
 disp("E:");
-disp(sys4.E);
+disp(E4);
 disp("C:");
-disp(sys4.C);
+disp(C4);
 disp("----------------------------------------------------------------------------------------------------------------------------------");
 
 // test case 5: conversion form dss(sys) where e is empty, should be replaced by identity
-sys_in = struct();
-sys_in.A = [1, 0; 0, 2];
-sys_in.B = [1; 1];
-sys_in.C = [1, 1];
-sys_in.D = [0];
-sys_in.E = [];
-sys_in.dt = 0;
-sys5 = dss(sys_in);
+A5 = [1, 0; 0, 2];
+B5 = [1; 1];
+C5 = [1, 1];
+D5 = [0];
+E5 = [];
+sys5 = dss(A5, B5, C5, D5, E5)
 disp("test case 5: conversion from struct with empty e, expects e = eye(2)");
 disp("E:");
-disp(sys5.E);
+disp(E5);
 disp("A:");
-disp(sys5.A);
+disp(A5);
 disp("----------------------------------------------------------------------------------------------------------------------------------");
-
-
-
