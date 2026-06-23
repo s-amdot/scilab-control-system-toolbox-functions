@@ -135,3 +135,19 @@ disp("test case 5:");
 disp("X5:", X5);
 disp("L5:", L5);
 disp("G5:", G5);
+
+// descriptor Test 1: diagonal E, single input, no s
+disp("---")
+a=[0.9 0.1; 0 0.8]; b=[0;1]; q=eye(2,2); r=1; s=[]; e=[2 0; 0 1];
+[xe1,le1,ge1] = dare(a,b,q,r,s,e);
+disp("xe1:",xe1)
+disp("lel:", le1)
+disp("ge1:", ge1) 
+
+// descriptor Test 2: full E, cross-term s, single input
+a=[0.85 0.2; 0.1 0.7]; b=[1;1]; q=diag([3 1]); r=2; s=[0.1;0.2]; e=[1.5 0.2; 0 1.2];
+[xe2,le2,ge2] = dare(a,b,q,r,s,e);
+disp("xe2: ", xe2)
+disp("le2: ", le2)
+disp("ge2:", ge2)
+
