@@ -20,7 +20,10 @@ $J = \sum_{k=0}^{\infty} (x_k^T Q x_k + u_k^T R u_k)$
 * **L** - $n \times 1$ vector of closed-loop system eigenvalues (i.e., eigenvalues of $A - BG$).
 
 ## Dependencies
-`riccati` or equivalent algebraic Riccati equation solver.
+- `dare`- https://github.com/s-amdot/scilab-control-system-toolbox-functions/blob/main/dare/dare.sci
+- `care`- https://github.com/s-amdot/scilab-control-system-toolbox-functions/blob/main/care/care.sci
+- `issample`- https://github.com/akash-sankar/CSToolboxFunctions/blob/main/thiran/thiran.sci
+- `dssdata`- https://github.com/nikithad14/Scilab-control-system-toolbox-development-functions/blob/main/dssdata/dssdata.sci
 
 ---
 
@@ -131,3 +134,28 @@ test case 4: eigenvalues L:
   -0.3707 + 0.1542i
   -0.3707 - 0.1542i
 ```
+
+## 5
+
+```A5 = [0.8, 0.1; 0, 0.9];
+B5 = [1; 0];
+Q5 = [1, 0; 0, 1];
+R5 = [1];
+[G5, X5, L5] = dlqr(A5, B5, Q5, R5);
+disp("Test Case 5 - Gain G:");
+disp(G5);
+disp("Test Case 5 - Riccati X:");
+disp(X5);
+disp("Test Case 5 - Closed-loop Poles:");
+disp(L5);
+```
+```
+  "Test Case 5 - Gain G:"
+   0.4624405   0.0830298
+  "Test Case 5 - Riccati X:"
+   1.3699524   0.0664239
+   0.0664239   5.3121973
+  "Test Case 5 - Closed-loop Poles:"
+   0.3375595 + 0.i
+   0.9       + 0.i
+``
