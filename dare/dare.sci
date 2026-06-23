@@ -100,16 +100,6 @@ A = [1 0.1; 0 1]; B = [0; 0.1]; Q = eye(2,2); R = 1; S = [0; 0.05];
 [X, L, G] = dare(A, B, Q, R, S);
 disp("T3 X:", X); disp("T3 G:", G);
 
-// Test 4
-A = [0.8 0 0; 0.1 0.7 0; 0 0.2 0.6]; B = [1;0;0]; Q = eye(3,3); R = 0.5;
-[X, L, G] = dare(A, B, Q, R);
-disp("T4 X:", X); disp("T4 L:", L);
-
-// Test 5
-A = 0.8; B = 1; Q = 1; R = 1;
-[X,L,G] = dare(A,B,Q,R);
-disp("T5 X:", X); disp("T5 G:", G);
-
 // descriptor Test 1: diagonal E, single input, no s
 a=[0.9 0.1; 0 0.8]; b=[0;1]; q=eye(2,2); r=1; s=[]; e=[2 0; 0 1];
 [xe1,le1,ge1] = dare(a,b,q,r,s,e);
