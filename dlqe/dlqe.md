@@ -27,8 +27,8 @@
 
 ## Dependencies
 
--`dare`- https://github.com/s-amdot/scilab-control-system-toolbox-functions/blob/main/dare/dare.sci
--`care`- https://github.com/s-amdot/scilab-control-system-toolbox-functions/blob/main/care/care.sci
+`dare`- https://github.com/s-amdot/scilab-control-system-toolbox-functions/blob/main/dare/dare.sci
+`care`- https://github.com/s-amdot/scilab-control-system-toolbox-functions/blob/main/care/care.sci
 ## Examples
 
 ## 1
