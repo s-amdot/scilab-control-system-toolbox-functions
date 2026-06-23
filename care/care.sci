@@ -89,7 +89,6 @@ disp("X1:", X1);
 disp("L1:", L1);
 disp("G1:", G1);
 
-
 // test case 2:
 A2 = [1 2; 3 4];
 B2 = [1; 0];
@@ -100,7 +99,6 @@ disp("test case 2:");
 disp("X2:", X2);
 disp("L2:", L2);
 disp("G2:", G2);
-
 
 // test case 3:
 A3 = [0 1 0; 0 0 1; -1 -5 -6];
@@ -113,41 +111,27 @@ disp("X3:", X3);
 disp("L3:", L3);
 disp("G3:", G3);
 
+// descriptor test 1: diagonal E, no cross-term S
+a = [0 1; -2 -3];
+b = [0; 1];
+q = eye(2,2);
+r = 1;
+s = [];
+e = [2 0; 0 1];
+[xe1, le1, ge1] = care(a, b, q, r, s, e);
+disp("xe1:", xe1)
+disp("le1:", le1)
+disp("ge1:", ge1)
 
-// test case 4:
-A4 = [0 1; -4 -2];
-B4 = [0; 1];
-Q4 = [10 0; 0 1];
-R4 = 0.5;
-[X4,L4,G4] = care(A4,B4,Q4,R4);
-disp("test case 4:");
-disp("X4:", X4);
-disp("L4:", L4);
-disp("G4:", G4);
-
-// test case 5:
-A5 = [0 1; 0 0];
-B5 = [0; 1];
-Q5 = eye(2,2);
-R5 = 0.1;
-[X5,L5,G5] = care(A5,B5,Q5,R5);
-disp("test case 5:");
-disp("X5:", X5);
-disp("L5:", L5);
-disp("G5:", G5);
-
-// descriptor Test 1: diagonal E, single input, no s
-disp("---")
-a=[0.9 0.1; 0 0.8]; b=[0;1]; q=eye(2,2); r=1; s=[]; e=[2 0; 0 1];
-[xe1,le1,ge1] = dare(a,b,q,r,s,e);
-disp("xe1:",xe1)
-disp("lel:", le1)
-disp("ge1:", ge1) 
-
-// descriptor Test 2: full E, cross-term s, single input
-a=[0.85 0.2; 0.1 0.7]; b=[1;1]; q=diag([3 1]); r=2; s=[0.1;0.2]; e=[1.5 0.2; 0 1.2];
-[xe2,le2,ge2] = dare(a,b,q,r,s,e);
-disp("xe2: ", xe2)
-disp("le2: ", le2)
+// descriptor test 2: full E, cross-term S, single input
+a = [0 1; -1 -2];
+b = [1; 1];
+q = diag([3 1]);
+r = 2;
+s = [0.1; 0.2];
+e = [1.5 0.2; 0 1.2];
+[xe2, le2, ge2] = care(a, b, q, r, s, e);
+disp("xe2:", xe2)
+disp("le2:", le2)
 disp("ge2:", ge2)
 
