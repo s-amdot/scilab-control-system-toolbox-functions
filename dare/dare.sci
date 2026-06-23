@@ -1,3 +1,23 @@
+/* 2026 Author: Samiksha <samikshaa18@gmail.com> */
+/* dare.sci
+solves the discrete-time algebraic Riccati equation */
+/*
+Description:
+      Solves the discrete-time algebraic Riccati equation (DARE)
+      associated with a discrete-time state-space system.
+      Computes the stabilizing Riccati solution X, the closed-loop
+      eigenvalues L, and the optimal state-feedback gain G.
+      Supports optional cross-weighting matrix S and descriptor
+      matrix E.
+Calling Sequence:
+      [X, L, G] = dare(A, B, Q, R)
+      [X, L, G] = dare(A, B, Q, R, S)
+      [X, L, G] = dare(A, B, Q, R, S, E)
+Dependencies:
+      __sl_sb02od__
+      __sl_sg02ad__
+*/
+
 function [x, l, g] = dare(a, b, q, r, s, e)
 
     if argn(2) < 4 | argn(2) > 6 then
