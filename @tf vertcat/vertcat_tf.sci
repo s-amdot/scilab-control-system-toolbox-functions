@@ -61,6 +61,37 @@ function sys = vertcat(sys, varargin)
 
 endfunction
 
+
+function lti = __lti_group__ (lti1, lti2, ctype)
+  lti = lti1;
+
+  if (lti1.tsam == lti2.tsam) then
+    lti.tsam = lti1.tsam;
+  elseif (lti1.tsam == -1) then
+    lti.tsam = lti2.tsam;
+  elseif (lti2.tsam == -1) then
+    lti.tsam = lti1.tsam;
+  else
+    error("lti: __lti_group__: systems must have identical sampling times");
+  end
+
+  if (ctype == "horzcat") then
+    lti.ingroup = [];
+    lti.inname = [lti1.inname; lti2.inname];
+    lti.outgroup = lti1.outgroup;
+    lti.outname = lti1.outname;
+  elseif (ctype == "vertcat") then
+    lti.outgroup = [];
+    lti.outname = [lti1.outname; lti2.outname];
+    lti.ingroup = lti1.ingroup;
+    lti.inname = lti1.inname;
+  else
+    lti.ingroup = [];
+    lti.outgroup = [];
+    lti.inname = [lti1.inname; lti2.inname];
+    lti.outname = [lti1.outname; lti2.outname];
+  end
+endfunction
 // Test Case 1: two SISO transfer functions
 g1 = tf([1],[1 1]);
 g2 = tf([2],[1 2]);
