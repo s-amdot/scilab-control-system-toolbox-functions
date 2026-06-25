@@ -1,8 +1,6 @@
 /* 2026 Author: Samiksha <samikshaa18@gmail.com> */
-
 /* obsvf.sci
    observable staircase form decomposition */
-
 /*
 Description:
       Computes the observable staircase decomposition of a state-space
@@ -12,69 +10,135 @@ Description:
       The implementation is based on the controllability staircase
       decomposition obtained from ctrbf() applied to the transposed
       system matrices.
-
 Calling Sequence:
       [Ao, Bo, Co, T, nobsv] = obsvf(A, B, C)
       [Ao, Bo, Co, T, nobsv] = obsvf(A, B, C, tol)
-
 Dependencies:
-      https://github.com/yeoleparesh/Control-system/blob/master/ctrbf.sci
+      ctrbf- https://github.com/s-amdot/scilab-control-system-toolbox-functions/blob/main/ctrbf/ctrbf.sci
 */
 
-function [ac, bc, cc, z, ncont] = obsvf(a, b, c, tol)
-    if argn(2)<1|argn(2)>4 then 
-        error("obsvf: wrong number of arguments"); 
-    end
-    if argn(2)<2 then 
-        b = []; 
-    end
-    if argn(2) < 4 then 
-        tol = []; 
+function [ac, bc, cc, z, ncont] = ctrbf(a, b, c, tol)
+    if (argn(2) < 1 | argn(2) > 4) then
+        error("ctrbf: wrong number of input arguments");
     end
 
-    if typeof(a) =="state-space"|typeof(a)=="rational" then
-        if argn(2)>2 then 
-            error("too many inputs for LTI form"); 
-        end
-        [ac, bc, cc] = ctrbf(a.', b);
-        ac = ac.';
-        z = []; ncont = [];
-    else
-        if argn(2)<3 then 
-            error("requires A, B, C"); 
-        end
-        [ac, tmp, cc, z, ncont] = ctrbf(a.', c.', b.', tol);
-        ac = ac.';
-        bc = cc.';
-        cc = tmp.';
+    if (argn(2) < 2) then
+        b = [];
     end
+    if (argn(2) < 4) then
+        tol = [];
+    end
+
+    if (typeof(a) == "rational" | typeof(a) == "state-space") then
+        if (argn(2) > 2) then
+            error("ctrbf: wrong number of input arguments");
+        end
+        sys = a;
+        tol = b;
+        a = sys("A");
+        b = sys("B");
+        c = sys("C");
+    else
+        if (argn(2) < 3) then
+            error("ctrbf: wrong number of input arguments");
+        end
+        sys = syslin("c", a, b, c);
+        a = sys("A");
+        b = sys("B");
+        c = sys("C");
+    end
+
+    if (isempty(tol)) then
+        tol = 0;
+    elseif ~(isreal(tol) & isscalar(tol)) then
+        error("ctrbf: tol must be a real scalar");
+    end
+
+    [ac, bc, cc, z, ncont] = __sl_tb01ud__(a, b, c, tol);
+
+    if (typeof(a) == "rational" | typeof(a) == "state-space") then
+        ac = set(sys, "a", ac, "b", bc, "c", cc, "scaled", %f);
+        bc = z;
+        cc = ncont;
+    end
+
 endfunction
 
-// Test 1: simple 2x2 fully observable
-A = [1 1; 0 2]; B = [0; 1]; C = [1 0];
-[Ao, Bo, Co, T, no] = obsvf(A, B, C);
-disp("T1 nobsv:", no); disp("T1 Ao:", Ao);
+// Test Case 1: Fully controllable 2-state system
 
-// Test 2: unobservable mode
-A = [1 0; 0 2]; B = [1; 1]; C = [1 0];
-[Ao, Bo, Co, T, no] = obsvf(A, B, C);
-disp("T2 nobsv:", no); disp("T2 Co:", Co);
+A1 = [0 1;
+     -2 -3];
+B1 = [0;
+      1];
+C1 = [1 0];
+[Ac1,Bc1,Cc1,Z1,Ncont1] = ctrbf(A1,B1,C1);
+disp("test case 1:");
+disp("Ac1:",Ac1);
+disp("Bc1:",Bc1);
+disp("Cc1:",Cc1);
+disp("Z1:",Z1);
+disp("Ncont1:",Ncont1);
 
-// Test 3: with tolerance
-A = [-1 1; 0 -2]; B = [1; 0]; C = [0 1];
-[Ao, Bo, Co, T, no] = obsvf(A, B, C, 1e-8);
-disp("T3 nobsv:", no); disp("T3 T:", T);
+// Test Case 2: One uncontrollable state
 
-// Test 4: 3x3 system
-A = [0 1 0; 0 0 1; -6 -11 -6]; B = [0; 0; 1]; C = [1 0 0];
-[Ao, Bo, Co, T, no] = obsvf(A, B, C);
-disp("T4 nobsv:", no); disp("T4 Ao:", Ao);
+A2 = [1 0;
+      0 2];
+B2 = [1;
+      0];
+C2 = [1 1];
+[Ac2,Bc2,Cc2,Z2,Ncont2] = ctrbf(A2,B2,C2);
+disp("test case 2:");
+disp("Ac2:",Ac2);
+disp("Bc2:",Bc2);
+disp("Cc2:",Cc2);
+disp("Z2:",Z2);
+disp("Ncont2:",Ncont2);
 
-// Test 5: repeated eigenvalue, partially observable system
-A = [2 1 0;0 2 1;0 0 2];
-B = [1; 0; 1];
-C = [1 0 0];
-[Ao, Bo, Co, T, no] = obsvf(A, B, C);
-disp("T5 nobsv:", no);
-disp("T5 Ao:", Ao);
-disp("T5 T:", T);
+// Test Case 3: Completely uncontrollable system
+
+A3 = [1 2;
+      3 4];
+B3 = [0;
+      0];
+C3 = [1 0];
+[Ac3,Bc3,Cc3,Z3,Ncont3] = ctrbf(A3,B3,C3);
+disp("test case 3:");
+disp("Ac3:",Ac3);
+disp("Bc3:",Bc3);
+disp("Cc3:",Cc3);
+disp("Z3:",Z3);
+disp("Ncont3:",Ncont3);
+
+// Test Case 4: 3-state system with 2 controllable states
+
+A4 = [0 1 0;
+      0 0 0;
+      0 0 2];
+B4 = [0;
+      1;
+      0];
+C4 = [1 0 1];
+[Ac4,Bc4,Cc4,Z4,Ncont4] = ctrbf(A4,B4,C4);
+disp("test case 4:");
+disp("Ac4:",Ac4);
+disp("Bc4:",Bc4);
+disp("Cc4:",Cc4);
+disp("Z4:",Z4);
+disp("Ncont4:",Ncont4);
+
+// Test Case 5: Multi-input system
+
+A5 = [0 1 0;
+      0 0 1;
+     -1 -5 -6];
+B5 = [0 1;
+      0 0;
+      1 1];
+C5 = [1 0 0];
+[Ac5,Bc5,Cc5,Z5,Ncont5] = ctrbf(A5,B5,C5);
+disp("test case 5:");
+disp("Ac5:",Ac5);
+disp("Bc5:",Bc5);
+disp("Cc5:",Cc5);
+disp("Z5:",Z5);
+disp("Ncont5:",Ncont5);
