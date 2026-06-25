@@ -30,7 +30,7 @@
 ## Dependencies
 - [@lti/ssdata](https://github.com/akash-sankar/CSToolboxFunctions/tree/main/%40lti%20ssdata)
 
--  __sl_tb01ud__
+-  [__sl_tb01ud__](https://github.com/s-amdot/scilab-control-system-toolbox-functions/blob/main/ctrbf/__sl_tb01ud__.sci)
 
 ## Examples
 
