@@ -16,38 +16,35 @@ Calling Sequence:
 
 Dependencies:
       __sl_tb01ud__
+      ssdata- https://github.com/akash-sankar/CSToolboxFunctions/blob/main/%40lti%20ssdata/ssdata.sci
 */
 
 function [ac, bc, cc, z, ncont] = ctrbf(a, b, c, tol)
 
-    if (argn(2) < 1 | argn(2) > 4) then
+    if (argn(2)<1 | argn(2)>4) then
         error("ctrbf: wrong number of input arguments");
     end
-    if (argn(2) < 2) then
+    if (argn(2)<2) then
         b = [];
     end
-    if (argn(2) < 4) then
+    if (argn(2)<4) then
         tol = [];
     end
 
-    if (typeof(a) == "rational" | typeof(a) == "state-space") then
+    if (typeof(a)=="rational"|typeof(a)=="state-space") then
 
         if (argn(2) > 2) then
             error("ctrbf: wrong number of input arguments");
         end
         sys = a;
         tol = b;
-        a = sys("A");
-        b = sys("B");
-        c = sys("C");
+        [a, b, c] = ssdata (sys);
     else
         if (argn(2) < 3) then
             error("ctrbf: wrong number of input arguments");
         end
         sys = syslin("c", a, b, c);
-        a = sys("A");
-        b = sys("B");
-        c = sys("C");
+        [a, b, c] = ssdata(sys);
     end
 
     if (isempty(tol)) then
@@ -58,7 +55,7 @@ function [ac, bc, cc, z, ncont] = ctrbf(a, b, c, tol)
 
     [ac, bc, cc, z, ncont] = __sl_tb01ud__(a, b, c, tol);
 
-    if (typeof(a) == "rational" | typeof(a) == "state-space") then
+    if (typeof(a)=="rational" | typeof(a)=="state-space") then
         ac = set(sys, "a", ac, "b", bc, "c", cc, "scaled", %f);
         bc = z;
         cc = ncont;
