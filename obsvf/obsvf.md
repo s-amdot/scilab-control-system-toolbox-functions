@@ -1,80 +1,156 @@
 # obsvf
 
 ## Description
-Computes the observability canonical form (observability staircase form) of a linear state-space system. It transforms the system into a new coordinate basis where observable and unobservable states are separated into distinct subsystems.
+
+- Computes the observability staircase form of a state-space system.
+- Transforms the system matrices `(A, B, C)` into a block upper triangular form separating observable and unobservable subspaces.
+- Returns the transformed matrices, the orthogonal transformation matrix, and the number of observable states.
+- Accepts either raw matrices or a `state-space` system object.
 
 ## Calling Sequence
-```
-[Ao, Bo, Co, T, no] = obsvf(A, B, C)
-[Ao, Bo, Co, T, no] = obsvf(A, B, C, tol)
-```
+
+- `[Ao, Bo, Co, Z, Nobs] = obsvf(A, B, C)`
+- `[Ao, Bo, Co, Z, Nobs] = obsvf(A, B, C, tol)`
+- `[Ao, Bo, Co, Z, Nobs] = obsvf(sys)`
+- `[Ao, Bo, Co, Z, Nobs] = obsvf(sys, tol)`
 
 ## Parameters
-```
-**A** - n×n system state matrix
-**B** - n×m input matrix
-**C**- p×n output matrix
-**tol** - optional tolerance for rank/observability detection
-**Ao** - transformed state matrix (observability form)
-**Bo** - transformed input matrix
-**Co** - transformed output matrix
-**T** - similarity transformation matrix
-**no** - number of observable states
-```
+
+- `A` - State matrix.
+- `B` - Input matrix.
+- `C` - Output matrix.
+- `tol` - Optional tolerance for rank determination. Defaults to `0`.
+- `sys` - State-space system object (`state-space`).
+- `Ao` - Transformed state matrix in observability staircase form.
+- `Bo` - Transformed input matrix.
+- `Co` - Transformed output matrix.
+- `Z` - Orthogonal transformation matrix such that `Ao = Z'*A*Z`, `Bo = Z'*B`, `Co = C*Z`.
+- `Nobs` - Number of observable states.
 
 ## Dependencies
-```
-function:
-ctrbf
+- [ctrbf](https://github.com/s-amdot/scilab-control-system-toolbox-functions/blob/main/ctrbf/ctrbf.sci)
 
-source:
-https://github.com/yeoleparesh/Control-system/blob/master/ctrbf.sci
-```
-
+  
 ## Examples
 
-## 1 
+## 1
 
-```
-A1 = [1 1; 0 2];
-B1 = [0; 1];
+```scilab
+A1 = [0 1;
+     -2 -3];
+B1 = [0;
+      1];
 C1 = [1 0];
-
-[Ao1, Bo1, Co1, T1, no1] = obsvf(A1, B1, C1);
-
-disp("test case 1: no:");
-disp(no1);
-disp("test case 1: Ao:");
-disp(Ao1);
+[Ao1,Bo1,Co1,Z1,Nobs1] = obsvf(A1,B1,C1);
+disp("Test 1:");
+disp("Nobs1:", Nobs1);
+disp("Ao1:", Ao1);
 ```
-```
-test case 1: no:
-0. 0.
 
-test case 1: Ao:
-1. 1.
-0. 2.
+```text
+  "Test 1:"
+  "Nobs1:"
+   2.
+  "Ao1:"
+   0.   1.
+  -2.  -3.
 ```
 
 ## 2
 
-```
-A2 = [1 0; 0 2];
-B2 = [1; 1];
+```scilab
+A2 = [1 0;
+      0 2];
+B2 = [1;
+      0];
 C2 = [1 0];
-
-[Ao2, Bo2, Co2, T2, no2] = obsvf(A2, B2, C2);
-
-disp("test case 2: no:");
-disp(no2);
-disp("test case 2: Co:");
-disp(Co2);
-```
-```
-test case 2: no:
-0.   0.
-test case 2: Co:
-1. 0.
+[Ao2,Bo2,Co2,Z2,Nobs2] = obsvf(A2,B2,C2);
+disp("Test 2:");
+disp("Nobs2:", Nobs2);
+disp("Ao2:", Ao2);
 ```
 
+```text
+  "Test 2:"
+  "Nobs2:"
+   1.
+  "Ao2:"
+   1.   0.
+   0.   2.
+```
 
+## 3
+
+```scilab
+A3 = [1 2;
+      3 4];
+B3 = [1;
+      0];
+C3 = [0 0];
+[Ao3,Bo3,Co3,Z3,Nobs3] = obsvf(A3,B3,C3);
+disp("Test 3:");
+disp("Nobs3:", Nobs3);
+disp("Ao3:", Ao3);
+```
+
+```text
+  "Test 3:"
+  "Nobs3:"
+   0.
+  "Ao3:"
+   1.   2.
+   3.   4.
+```
+
+## 4
+
+```scilab
+A4 = [0 1 0;
+      0 0 0;
+      0 0 2];
+B4 = [0;
+      1;
+      0];
+C4 = [1 0 0];
+[Ao4,Bo4,Co4,Z4,Nobs4] = obsvf(A4,B4,C4);
+disp("Test 4:");
+disp("Nobs4:", Nobs4);
+disp("Ao4:", Ao4);
+```
+
+```text
+  "Test 4:"
+  "Nobs4:"
+   2.
+  "Ao4:"
+   0.   1.   0.
+   0.   0.   0.
+   0.   0.   2.
+```
+
+## 5
+
+```scilab
+A5 = [0 1 0;
+      0 0 1;
+     -1 -5 -6];
+B5 = [0;
+      0;
+      1];
+C5 = [1 0 0;
+      0 1 0];
+[Ao5,Bo5,Co5,Z5,Nobs5] = obsvf(A5,B5,C5);
+disp("Test 5:");
+disp("Nobs5:", Nobs5);
+disp("Ao5:", Ao5);
+```
+
+```text
+  "Test 5:"
+  "Nobs5:"
+   3.
+  "Ao5:"
+   0.   1.   0.
+   0.   0.   1.
+  -1.  -5.  -6.
+```
