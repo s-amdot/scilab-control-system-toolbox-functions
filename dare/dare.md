@@ -26,8 +26,9 @@
 * `G` - Optimal state-feedback gain matrix
 
 ## Dependencies
-**sl_sb02od**
-**sl_sg02ad**
+- [**__sl_sb02od__**](https://github.com/s-amdot/scilab-control-system-toolbox-functions/blob/main/dare/__sl_sb02od__.sci)
+
+- [**__sl_sg02ad__**](https://github.com/s-amdot/scilab-control-system-toolbox-functions/blob/main/dare/__sl_sg02ad__.sci)
 
 ## Examples
 
