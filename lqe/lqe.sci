@@ -16,10 +16,7 @@ Calling Sequence:
       [M, P, Z, E] = lqe(sys, Q, R, S)
 
 Dependencies:
-      care
-      dlqe
-      dssdata
-      issample
+      lqr- https://github.com/s-amdot/scilab-control-system-toolbox-functions/blob/main/lqr/lqr.sci
 */
 
 function [l, p, e] = lqe (a, g, c, q, r, s)
