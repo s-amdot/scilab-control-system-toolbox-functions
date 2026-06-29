@@ -1,6 +1,6 @@
 // DEPENDENCY
 /* dare.sci */ 
-/* 2024 Author: Samiksha
+/* 2026 Author: Samiksha
 source- https://github.com/s-amdot/scilab-control-system-toolbox-functions/blob/main/dare/dare.sci 
 
 parameters:
