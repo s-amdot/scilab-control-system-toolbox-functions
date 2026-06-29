@@ -78,45 +78,43 @@ endfunction
 
 // TEST CASES:
 // Test Case 1: Basic discrete-time transfer function
-
 sys1 = tf([1 0.5], [1 -0.2 0.1], 0.1);
-[num1, den1] = filtdata(sys1);
+[num1, den1, tsam1] = filtdata(sys1);
 disp("Test Case 1:");
 disp(num1);
 disp(den1);
+disp(tsam1)
 
 
 // Test Case 2: Discrete-time static gain
-
 sys2 = tf(5, 1, 0.2);
-[num2, den2] = filtdata(sys2);
+[num2, den2, tsam2] = filtdata(sys2);
 disp("Test Case 2:");
 disp(num2);
 disp(den2);
-
+disp(tsam2)
 
 // Test Case 3: Second-order IIR filter
-
 sys3 = tf([0.1 0.2 0.1], [1 -1.2 0.36], 1);
-[num3, den3] = filtdata(sys3);
+[num3, den3, tsam3] = filtdata(sys3);
 disp("Test Case 3:");
 disp(num3);
 disp(den3);
-
+disp(tsam3)
 
 // Test Case 4: FIR filter
-
 sys4 = tf([1 2 3 4], 1, 0.05);
-[num4, den4] = filtdata(sys4);
+[num4, den4, tsam4] = filtdata(sys4);
 disp("Test Case 4:");
 disp(num4);
 disp(den4);
-
+disp(tsam4)
 
 // Test Case 5: Unknown discrete sampling time
-
 sys5 = tf([1 -1], [1 -0.8], "d");
-[num5, den5] = filtdata(sys5);
+[num5, den5, tsam5] = filtdata(sys5);
 disp("Test Case 5:");
 disp(num5);
 disp(den5);
+disp(tsam5)
+
