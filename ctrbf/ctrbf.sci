@@ -141,3 +141,18 @@ disp("Bc5:",Bc5);
 disp("Cc5:",Cc5);
 disp("Z5:",Z5);
 disp("Ncont5:",Ncont5);
+
+// OCTAVE TEST CASE:
+A = [-1  0  0;
+     -2 -2 -2;
+     -1  0 -3];
+B = [1 0 0;
+     0 2 1]';
+C = [0 2 1;
+     1 0 0];
+[Ac, Bc, Cc, Z, NCONT] = ctrbf(A, B, C);
+disp("Ac:");disp(Ac);
+disp("Bc:");disp(Bc);
+disp("Cc:");disp(Cc);
+disp("Z:");disp(Z);
+disp("NCONT:");disp(NCONT);
