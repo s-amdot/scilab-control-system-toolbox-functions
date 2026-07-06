@@ -37,11 +37,17 @@ sys1 = tf([1],[1 1]);   sys2 = tf([1],[1 2]);   sys3 = tf([2],[1 3]);
 
 // Test 1: horzcat two SISO (shared 1 output, appended inputs -> 1 out, 2 in)
 h1 = horzcat_lti(sys1, sys2);
-disp("H-Test 1:"); disp(size(h1));
+disp("H-Test 1:");
+disp(h1);
+disp(size(h1));
 
 // Test 2: horzcat_lti three SISO -> 1 out, 3 in
 h2 = horzcat_lti(sys1, sys2, sys3);
-disp("H-Test 2:"); disp(size(h2));
+disp("H-Test 2:");
+disp("System:");
+disp(h2);
+disp("Size:");
+disp(size(h2));
 
 // Test 3: horzcat_lti two 2-output systems
 A = [-1 0; 0 -2]; B = [1; 1]; C = [1 0; 0 1]; D = [0; 0];
@@ -52,10 +58,13 @@ disp("H-Test 3:"); disp(size(h3));
 
 // Test 4: single-arg horzcat_lti (no-op)
 h4 = horzcat_lti(sys1);
-disp("H-Test 4:"); disp(size(h4));
+disp("H-Test 4:");
+disp("System:");
+disp(h4);
+disp("Size:");
+disp(size(h4));;
 
 // Test 5: incompatible outputs -> error
 disp("H-Test 5 (mismatched outputs -> expect error):");
 ierr = execstr("h5 = horzcat_lti(sys1, m1);", "errcatch");
 if ierr <> 0 then disp(lasterror()); else disp(size(h5)); end
-
