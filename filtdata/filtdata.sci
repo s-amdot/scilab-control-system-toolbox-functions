@@ -1,3 +1,26 @@
+/* 2026 Author: Samiksha <samikshaa18@gmail.com> */
+/* filtdata.sci
+extracts numerator and denominator coefficients from a discrete-time LTI system */
+/*
+Description:
+      Extracts the numerator and denominator coefficient vectors of a
+      discrete-time transfer function model. Supports transfer function,
+      state-space, and static gain inputs by first converting them to
+      transfer function form. Optionally returns vectors for SISO systems.
+
+Calling Sequence:
+      [num, den] = filtdata(sys)
+      [num, den, tsam] = filtdata(sys)
+      [num, den] = filtdata(sys, rtype)
+      [num, den, tsam] = filtdata(sys, rtype)
+
+Dependencies:
+      tf
+      tfdata
+      isdt
+      issiso
+*/
+
 function [num, den, tsam] = filtdata (sys, rtype)
   if (argn(2) > 2) then
     error("filtdata: too many input arguments");
