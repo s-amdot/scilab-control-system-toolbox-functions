@@ -33,28 +33,37 @@ function sys = vertcat_lti (sys, varargin)
   end
 endfunction
 
-sys1 = tf([1],[1 1]);   sys2 = tf([1],[1 2]);   sys3 = tf([2],[1 3]);
+// Test 1: position and velocity sensors on same system (2 outputs, 1 input)
+s1 = syslin('c', [-1], [1], [1], [0]);   // position sensor
+s2 = syslin('c', [-2], [1], [2], [0]);   // velocity sensor (different C)
+sys1 = vertcat_lti(s1, s2);
+disp("T1 sys:"); disp(sys1);
 
-// Test 1: vertcat two SISO (shared 1 input, stacked outputs -> 2 out, 1 in)
-v1 = vertcat_lti(sys1, sys2);
-disp("V-Test 1:"); disp(size(v1));
+// Test 2: two second-order systems same input, outputs stacked
+s1 = syslin('c', [0 1; -1 -2], [0; 1], [1 0], [0]);
+s2 = syslin('c', [0 1; -3 -4], [0; 1], [0 1], [0]);
+sys2 = vertcat_lti(s1, s2);
+disp("T2 sys:"); disp(sys2);
 
-// Test 2: vertcat three SISO -> 3 out, 1 in
-v2 = vertcat_lti(sys1, sys2, sys3);
-disp("V-Test 2:"); disp(size(v2));
+// Test 3: discrete observer with two measurement outputs
+s1 = syslin('d', [0.95 0.1; 0 0.9], [0.1; 0.05], [1 0], [0]);
+s2 = syslin('d', [0.95 0.1; 0 0.9], [0.1; 0.05], [0 1], [0]);
+sys3 = vertcat_lti(s1, s2);
+disp("T3 sys:"); disp(sys3);
 
-// Test 3: vertcat two 2-input systems
-A = [-1 0; 0 -2]; B = [1 0; 0 1]; C = [1 1]; D = [0 0];
-m1 = syslin("c", A, B, C, D);   // 1 out, 2 in
-m2 = syslin("c", A, B, [1 0], [0 0]);   // 1 out, 2 in
-v3 = vertcat_lti(m1, m2);
-disp("V-Test 3:"); disp(size(v3));
+// Test 4: three sensors on same plant
+s1 = syslin('c', [-1], [1], [1], [0]);
+s2 = syslin('c', [-1], [1], [2], [0]);
+s3 = syslin('c', [-1], [1], [3], [0]);
+sys4 = vertcat_lti(s1, s2, s3);
+disp("T4 sys:"); disp(sys4);
 
-// Test 4: single-arg vertcat (no-op, returns system unchanged)
-v4 = vertcat_lti(sys1);
-disp("V-Test 4:"); disp(size(v4));
-
-// Test 5: incompatible inputs -> error
-disp("V-Test 5:");
-ierr = execstr("v5 = vertcat(sys1, m1);", "errcatch");
-if ierr <> 0 then disp(lasterror()); else disp(size(v5)); end
+// Test 5: incompatible inputs (2 inputs vs 1 input) should error
+s1 = syslin('c', [0 1; -2 -3], [0 1; 1 0], [1 0], zeros(1,2));
+s2 = syslin('c', [-1], [1], [1], [0]);
+try
+    sys5 = vertcat_lti(s1, s2);
+    disp("T5: no error raised");
+catch
+    disp("T5: error caught correctly");
+end
