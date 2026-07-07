@@ -1,3 +1,5 @@
+// source- https://github.com/pavannani99/Scilab-control-system-toolbox-development-functions/tree/main/blkdiag/DEPENDENCIES
+
 function retsys = __sys_group__(sys1, sys2)
 
     // If one system is just a numeric value, create a proper LTI system.
