@@ -20,7 +20,7 @@
 
 ## Dependencies
 
-- `__sys_group__`
+- `__sys_group__`- https://github.com/pavannani99/Scilab-control-system-toolbox-development-functions/tree/main/blkdiag/DEPENDENCIES
 
 ## Examples
 
