@@ -1,4 +1,4 @@
-source- https://github.com/pavannani99/Scilab-control-system-toolbox-development-functions/tree/main/blkdiag/DEPENDENCIES
+// source- https://github.com/pavannani99/Scilab-control-system-toolbox-development-functions/tree/main/blkdiag/DEPENDENCIES
 
 function retsys = __sys_group__(sys1, sys2)
 
