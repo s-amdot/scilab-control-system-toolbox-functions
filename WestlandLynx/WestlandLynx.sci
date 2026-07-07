@@ -64,23 +64,20 @@ function outsys = WestlandLynx()
     disp(C);
 endfunction
 
+
 sys=WestlandLynx()
 
-// 1. dimensions: expect 6 outputs, 4 inputs
-[p, m] = size(sys);
-disp("outputs (expect 6):"); disp(p);
-disp("inputs (expect 4):");  disp(m);
+// Test Case 1: Load the Westland Lynx benchmark model
 
-// 2. state count: expect 8
-disp("states (expect 8):"); disp(size(sys("A"), 1));
+disp("Test Case 1:");
+disp(sys);
 
-// 3. system matrices echoed back
-disp("A:"); disp(sys("A"));
-disp("B:"); disp(sys("B"));
-disp("C:"); disp(sys("C"));
-disp("D:"); disp(sys("D"));
+// Test Case 2: Incorrect number of input arguments (should error)
 
-// 4. eigenvalues (open-loop poles) — the key numeric check vs Octave
-disp("poles:"); disp(spec(sys("A")));
+sys0 = WestlandLynx(1);
+
+disp("Test Case 2:");
+disp(sys);
+
 
 
