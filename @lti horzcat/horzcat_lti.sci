@@ -33,38 +33,39 @@ function sys = horzcat_lti (sys, varargin)
   end
 endfunction
 
-sys1 = tf([1],[1 1]);   sys2 = tf([1],[1 2]);   sys3 = tf([2],[1 3]);
 
-// Test 1: horzcat two SISO (shared 1 output, appended inputs -> 1 out, 2 in)
-h1 = horzcat_lti(sys1, sys2);
-disp("H-Test 1:");
-disp(h1);
-disp(size(h1));
+// Test 1: two SISO continuous systems [1/(s-1), 1/(s-2)]
+s1 = syslin('c', [1], [1], [1], [0]);
+s2 = syslin('c', [2], [1], [1], [0]);
+sys1 = horzcat_lti(s1, s2);
+disp("T1 sys:"); disp(sys1);
 
-// Test 2: horzcat_lti three SISO -> 1 out, 3 in
-h2 = horzcat_lti(sys1, sys2, sys3);
-disp("H-Test 2:");
-disp("System:");
-disp(h2);
-disp("Size:");
-disp(size(h2));
+// Test 2: two SISO discrete systems [1/(z-0.9), 1/(z-0.8)]
+s1 = syslin('d', [0.9], [1], [1], [0]);
+s2 = syslin('d', [0.8], [1], [1], [0]);
+sys2 = horzcat_lti(s1, s2);
+disp("T2 sys:"); disp(sys2);
 
-// Test 3: horzcat_lti two 2-output systems
-A = [-1 0; 0 -2]; B = [1; 1]; C = [1 0; 0 1]; D = [0; 0];
-m1 = syslin("c", A, B, C, D);   // 2 out, 1 in
-m2 = syslin("c", A, B, C, D);   // 2 out, 1 in
-h3 = horzcat_lti(m1, m2);
-disp("H-Test 3:"); disp(size(h3));
+// Test 3: two MIMO continuous systems, 2 outputs each
+s1 = syslin('c', [0 1; -2 -3], [0; 1], [1 0; 0 1], zeros(2,1));
+s2 = syslin('c', [0 1; -1 -2], [1; 0], [1 0; 0 1], zeros(2,1));
+sys3 = horzcat_lti(s1, s2);
+disp("T3 sys:"); disp(sys3);
 
-// Test 4: single-arg horzcat_lti (no-op)
-h4 = horzcat_lti(sys1);
-disp("H-Test 4:");
-disp("System:");
-disp(h4);
-disp("Size:");
-disp(size(h4));;
+// Test 4: three SISO continuous systems [1/(s-1), 1/(s-2), 1/(s-3)]
+s1 = syslin('c', [1], [1], [1], [0]);
+s2 = syslin('c', [2], [1], [1], [0]);
+s3 = syslin('c', [3], [1], [1], [0]);
+sys4 = horzcat_lti(s1, s2, s3);
+disp("T4 sys:"); disp(sys4);
 
-// Test 5: incompatible outputs -> error
-disp("H-Test 5 (mismatched outputs -> expect error):");
-ierr = execstr("h5 = horzcat_lti(sys1, m1);", "errcatch");
-if ierr <> 0 then disp(lasterror()); else disp(size(h5)); end
+// Test 5: incompatible outputs should error
+s1 = syslin('c', [0 1; -2 -3], [0; 1], [1 0; 0 1], zeros(2,1));
+s2 = syslin('c', [1], [1], [1], [0]);
+try
+    sys5 = horzcat_lti(s1, s2);
+    disp("T5: no error raised");
+catch
+    disp("T5: error caught correctly");
+end
+
