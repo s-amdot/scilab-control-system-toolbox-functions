@@ -24,181 +24,193 @@
 
 ## Examples
 
-## 1
+### 1.
 
 ```scilab
-s = poly(0, "s");
+p1 = tf([3],[1 4]);
+p2 = tf([1],[1 5]);
 
-sys1 = syslin("c", 1/(s+1));
-sys2 = syslin("c", 2/(s+2));
+a1 = plus_lti(p1, p2);
 
-sys = plus_lti(sys1, sys2);
-
-disp("Test Case 1:");
-disp(sys);
+disp("plus_lti Test 1:");
+disp(a1);
 ```
 
 ```text
-"Test Case 1:"
+"plus_lti Test 1:"
 [state-space]
-A (matrix) = [-1,0;0,-2]
-B (matrix) = [1;1.4142136]
-C (matrix) = [1,1.4142136]
+A (matrix) = [-4,0;0,-5]
+B (matrix) = [1.7320508;1]
+C (matrix) = [1.7320508,1]
 D (matrix) = 0
 X0 (initial state) = [0;0]
 dt (time domain) = "c"
 ```
 
-## 2
+---
+
+### 2.
 
 ```scilab
-sys1 = syslin("c", (s+2)/(s+1));
+p1 = tf([3],[1 4]);
+p3 = tf([5],[1 6]);
 
-sys = plus_lti(sys1, sys1);
+a2 = plus_lti(p1, p3);
 
-disp("Test Case 2:");
-disp(sys);
+disp("plus_lti Test 2:");
+disp(a2);
 ```
 
 ```text
-"Test Case 2:"
+"plus_lti Test 2:"
 [state-space]
-A (matrix) = [-1,0;0,-1]
-B (matrix) = [1;1]
-C (matrix) = [1,1]
-D (matrix) = 2
+A (matrix) = [-4,0;0,-6]
+B (matrix) = [1.7320508;2.236068]
+C (matrix) = [1.7320508,2.236068]
+D (matrix) = 0
 X0 (initial state) = [0;0]
 dt (time domain) = "c"
 ```
 
-## 3
+---
+
+### 3.
 
 ```scilab
-A = [-1 0;
-      0 -2];
-B = [1;
-     1];
-C = [1 0;
-     0 1];
-D = [0;
-     0];
-
-sys1 = syslin("c", A, B, C, D);
-sys2 = syslin("c", A, B, C, D);
-
-sys = plus_lti(sys1, sys2);
-
-disp("Test Case 3:");
-disp(sys);
-```
-
-```text
-"Test Case 3:"
-[2x1 state-space]
-A (matrix) = [-1,0,0,0;0,-2,0,0;0,0,-1,0;0,0,0,-2]
-B (matrix) = [1;1;1;1]
-C (matrix) = [1,0,1,0;0,1,0,1]
-D (matrix) = [0;0]
-X0 (initial state) = [0;0;0;0]
-dt (time domain) = "c"
-```
-
-## 4
-
-```scilab
-A = [-1 0;
-      0 -2];
-B = eye(2,2);
-C = eye(2,2);
+A = [-3 0; 1 -5];
+B = [2 0; 0 1];
+C = [1 0; 0 2];
 D = zeros(2,2);
 
-sys1 = syslin("c", A, B, C, D);
-sys2 = syslin("c", 2*A, B, C, D);
+N1 = syslin("c", A, B, C, D);
+N2 = syslin("c", A, B, C, D);
 
-sys = plus_lti(sys1, sys2);
+a3 = plus_lti(N1, N2);
 
-disp("Test Case 4:");
-disp(sys);
+disp("plus_lti Test 3:");
+disp(a3);
 ```
 
 ```text
-"Test Case 4:"
+"plus_lti Test 3:"
 [2x2 state-space]
-A (matrix) = [-1,0,0,0;0,-2,0,0;0,0,-2,0;0,0,0,-4]
-B (matrix) = [1,0;0,1;1,0;0,1]
-C (matrix) = [1,0,1,0;0,1,0,1]
+A (matrix) = [-3,0,0,0;1,-5,0,0;0,0,-3,0;0,0,1,-5]
+B (matrix) = [2,0;0,1;2,0;0,1]
+C (matrix) = [1,0,1,0;0,2,0,2]
 D (matrix) = [0,0;0,0]
 X0 (initial state) = [0;0;0;0]
 dt (time domain) = "c"
 ```
 
-## 5
+---
+
+### 4.
 
 ```scilab
-z = poly(0,"z");
+p1 = tf([3],[1 4]);
 
-sys1 = syslin(0.1, (z+1)/(z-0.2));
-sys2 = syslin(0.1, 2/(z-0.5));
+a4 = plus_lti(p1, p1);
 
-sys = plus_lti(sys1, sys2);
-
-disp("Test Case 5:");
-disp(sys);
+disp("plus_lti Test 4:");
+disp(a4);
 ```
 
 ```text
-"Test Case 5:"
+"plus_lti Test 4:"
 [state-space]
-A (matrix) = [0.2,0;0,0.5]
-B (matrix) = [1.0954451;1.4142136]
-C (matrix) = [1.0954451,1.4142136]
-D (matrix) = 1
+A (matrix) = [-4,0;0,-4]
+B (matrix) = [1.7320508;1.7320508]
+C (matrix) = [1.7320508,1.7320508]
+D (matrix) = 0
 X0 (initial state) = [0;0]
-dt (time domain) = 0.1
+dt (time domain) = "c"
 ```
 
-## 6
+---
+
+### 5.
 
 ```scilab
-sys1 = syslin("c", 1/(s+1));
+p2 = tf([1],[1 5]);
+p3 = tf([5],[1 6]);
 
-A = [-1 0;
-      0 -2];
-B = [1;
-     1];
-C = [1 0;
-     0 1];
-D = [0;
-     0];
+a5 = plus_lti(p2, p3);
 
-sys2 = syslin("c", A, B, C, D);
-
-disp("Test Case 6: EXPECTING ERROR");
-
-sys = plus_lti(sys1, sys2);
+disp("plus_lti Test 5:");
+disp(a5);
 ```
 
 ```text
-"Test Case 6: EXPECTING ERROR"
-
-lti: plus: system dimensions incompatible: (1x1) + (2x1)
+"plus_lti Test 5:"
+[state-space]
+A (matrix) = [-5,0;0,-6]
+B (matrix) = [1;2.236068]
+C (matrix) = [1,2.236068]
+D (matrix) = 0
+X0 (initial state) = [0;0]
+dt (time domain) = "c"
 ```
 
-## 7
+---
+
+### 6.
 
 ```scilab
-z = poly(0,"z");
+As1 = -1; Bs1 = 1; Cs1 = 1; Ds1 = 0;
+ss1 = syslin("c", As1, Bs1, Cs1, Ds1);
 
-sys1 = syslin(0.1, 1/(z-0.5));
-sys2 = syslin(0.2, 1/(z-0.3));
+As2 = -2; Bs2 = 1; Cs2 = 1; Ds2 = 0;
+ss2 = syslin("c", As2, Bs2, Cs2, Ds2);
 
-disp("Test Case 7: EXPECTING ERROR");
+ass1 = plus_lti(ss1, ss2);
 
-sys = plus_lti(sys1, sys2);
+disp("SS plus_lti (SISO):");
+disp(ass1);
 ```
 
 ```text
-"Test Case 7: EXPECTING ERROR"
+"SS plus_lti (SISO):"
+[state-space]
+A (matrix) = [-1,0;0,-2]
+B (matrix) = [1;1]
+C (matrix) = [1,1]
+D (matrix) = 0
+X0 (initial state) = [0;0]
+dt (time domain) = "c"
+```
 
-lti_group: systems must have identical sampling times
+---
+
+### 7.
+
+```scilab
+A = [-1 0.5; 0 -2];
+B = [1 0; 0 1];
+C = [1 0; 0 1];
+D = zeros(2,2);
+
+Ms1 = syslin("c", A, B, C, D);
+
+A2 = [-3 0; 1 -4];
+B2 = [1 0; 0 1];
+C2 = [1 0; 0 1];
+D2 = zeros(2,2);
+
+Ms2 = syslin("c", A2, B2, C2, D2);
+
+ass2 = plus_lti(Ms1, Ms2);
+
+disp("SS plus_lti (MIMO 2x2):");
+disp(ass2);
+```
+
+```text
+"SS plus_lti (MIMO 2x2):"
+[2x2 state-space]
+A (matrix) = [-1,0.5,0,0;0,-2,0,0;0,0,-3,0;0,0,1,-4]
+B (matrix) = [1,0;0,1;1,0;0,1]
+C (matrix) = [1,0,1,0;0,1,0,1]
+D (matrix) = [0,0;0,0]
+X0 (initial state) = [0;0;0;0]
+dt (time domain) = "c"
 ```
