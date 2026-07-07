@@ -13,7 +13,7 @@ Calling Sequence:
       sys = plus_lti(sys1, sys2)
 
 Dependencies:
-      __sys_group__
+      __sys_group__ - https://github.com/pavannani99/Scilab-control-system-toolbox-development-functions/tree/main/blkdiag/DEPENDENCIES
 */
 
 function sys = plus_lti(sys1, sys2)
@@ -39,116 +39,38 @@ function sys = plus_lti(sys1, sys2)
 
 endfunction
 
-// Common variable
-s = poly(0, "s");
+p1 = tf([3],[1 4]);   p2 = tf([1],[1 5]);   p3 = tf([5],[1 6]);
+// plus_lti
+a1 = plus_lti(p1, p2);
+disp("plus_lti Test 1:"); disp(a1);
 
-// ----------------------------------------------------
-// Test Case 1: Add two SISO systems
+a2 = plus_lti(p1, p3);
+disp("plus_lti Test 2:"); disp(a2);
 
-sys1 = syslin("c", 1/(s+1));
-sys2 = syslin("c", 2/(s+2));
+A = [-3 0; 1 -5]; B = [2 0; 0 1]; C = [1 0; 0 2]; D = zeros(2,2);
+N1 = syslin("c", A, B, C, D);  N2 = syslin("c", A, B, C, D);
+a3 = plus_lti(N1, N2);
+disp("plus_lti Test 3:"); disp(a3);
 
-sys = plus_lti(sys1, sys2);
+a4 = plus_lti(p1, p1);
+disp("plus_lti Test 4:"); disp(a4);
 
-disp("Test Case 1:");
-disp(sys);
+a5 = plus_lti(p2, p3);
+disp("plus_lti Test 5:"); disp(a5);
 
-
-// ----------------------------------------------------
-// Test Case 2: Add identical systems
-
-sys1 = syslin("c", (s+2)/(s+1));
-
-sys = plus_lti(sys1, sys1);
-
-disp("Test Case 2:");
-disp(sys);
-
-
-// ----------------------------------------------------
-// Test Case 3: Two SIMO systems (2 outputs, 1 input)
-
-A = [-1 0;
-      0 -2];
-B = [1;
-     1];
-C = [1 0;
-     0 1];
-D = [0;
-     0];
-
-sys1 = syslin("c", A, B, C, D);
-sys2 = syslin("c", A, B, C, D);
-
-sys = plus_lti(sys1, sys2);
-
-disp("Test Case 3:");
-disp(sys);
+// State-space SISO systems
+As1 = -1; Bs1 = 1; Cs1 = 1; Ds1 = 0;
+ss1 = syslin("c", As1, Bs1, Cs1, Ds1);   // 1/(s+1)
+As2 = -2; Bs2 = 1; Cs2 = 1; Ds2 = 0;
+ss2 = syslin("c", As2, Bs2, Cs2, Ds2);   // 1/(s+2)
+ass1 = plus_lti(ss1, ss2);
+disp("SS plus_lti_lti (SISO):"); disp(ass1);
 
 
-// ----------------------------------------------------
-// Test Case 4: Two MIMO systems (2 outputs, 2 inputs)
-
-A = [-1 0;
-      0 -2];
-B = eye(2,2);
-C = eye(2,2);
-D = zeros(2,2);
-
-sys1 = syslin("c", A, B, C, D);
-sys2 = syslin("c", 2*A, B, C, D);
-
-sys = plus_lti(sys1, sys2);
-
-disp("Test Case 4:");
-disp(sys);
-
-
-// ----------------------------------------------------
-// Test Case 5: Discrete-time systems
-
-z = poly(0,"z");
-
-sys1 = syslin(0.1, (z+1)/(z-0.2));
-sys2 = syslin(0.1, 2/(z-0.5));
-
-sys = plus_lti(sys1, sys2);
-
-disp("Test Case 5:");
-disp(sys);
-
-
-// ----------------------------------------------------
-// Test Case 6: Dimension mismatch (EXPECTING ERROR)
-
-sys1 = syslin("c", 1/(s+1));
-
-A = [-1 0;
-      0 -2];
-B = [1;
-     1];
-C = [1 0;
-     0 1];
-D = [0;
-     0];
-
-sys2 = syslin("c", A, B, C, D);
-
-disp("Test Case 6: EXPECTING ERROR");
-
-sys = plus_lti(sys1, sys2);
-disp(sys);
-
-
-// ----------------------------------------------------
-// Test Case 7: Different sampling times (EXPECTING ERROR)
-
-z = poly(0,"z");
-
-sys1 = syslin(0.1, 1/(z-0.5));
-sys2 = syslin(0.2, 1/(z-0.3));
-
-disp("Test Case 7: EXPECTING ERROR");
-
-sys = plus_lti(sys1, sys2);
-disp(sys);
+// State-space MIMO 2x2
+A = [-1 0.5; 0 -2]; B = [1 0; 0 1]; C = [1 0; 0 1]; D = zeros(2,2);
+Ms1 = syslin("c", A, B, C, D);
+A2 = [-3 0; 1 -4]; B2 = [1 0; 0 1]; C2 = [1 0; 0 1]; D2 = zeros(2,2);
+Ms2 = syslin("c", A2, B2, C2, D2);
+ass2 = plus_lti(Ms1, Ms2);
+disp("SS plus_lti (MIMO 2x2):"); disp(ass2);
