@@ -1,23 +1,33 @@
 /* 2026 Author: Samiksha <samikshaa18@gmail.com> */
-/* horzcat_lti.sci
-horizontal concatenation of LTI system models */
-/*
-Description:
-      Concatenates LTI system models horizontally.
-      The resulting system has the same number of outputs as the
-      input systems and combines their inputs side by side.
-      All systems must have the same number of outputs and
-      compatible sampling times.
+function sys = horzcat_lti(varargin)
+// Horizontally concatenate LTI systems.
+//
+// Syntax
+//   sys = horzcat_lti(sys1, sys2)
+//   sys = horzcat_lti(sys1, sys2, ..., sysN)
+//
+// Parameters
+// sys1, sys2, ..., sysN: LTI system objects. Input systems to be concatenated horizontally.
+// sys: LTI system object. Resulting system with the inputs of all systems concatenated.
+//
+// Description
+// This function horizontally concatenates two or more LTI systems. The resulting
+// system has the same number of outputs as the input systems while combining
+// their inputs side-by-side. All input systems must have the same number of
+// outputs and compatible sampling times.
+//
+// Examples
+// 1) Concatenate two SISO systems:
+//    sys1 = tf([1], [1 1]);
+//    sys2 = tf([2], [1 2]);
+//    sys = horzcat_lti(sys1, sys2);
+//
+// 2) Concatenate three SISO systems:
+//    sys = horzcat_lti(sys1, sys2, sys3);
+//
+// 3) Concatenate two MIMO systems:
+//    sys = horzcat_lti(sys1, sys2);
 
-Calling Sequence:
-      sys = [sys1, sys2]
-      sys = horzcat_lti(sys1, sys2, ...)
-
-Dependencies:
-      __sys_group__- https://github.com/pavannani99/Scilab-control-system-toolbox-development-functions/tree/main/blkdiag/DEPENDENCIES
-*/
-
-function sys = horzcat_lti (sys, varargin)
   for k = 1 : length(varargin)
     sys1 = sys;
     sys2 = varargin(k);
