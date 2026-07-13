@@ -1,21 +1,40 @@
-/* 2026 Author: Samiksha <samikshaa18@gmail.com> */
-/* vertcat_lti.sci
-vertical concatenation of LTI system models */
-/*
-Description:
-      Concatenates LTI system models vertically.
-      The resulting system has the same number of inputs as the
-      input systems and combines their outputs one below another.
-      All systems must have the same number of inputs and
-      compatible sampling times.
-
-Calling Sequence:
-      sys = [sys1; sys2]
-      sys = vertcat_lti(sys1, sys2, ...)
-
-Dependencies:
-      __sys_group__- https://github.com/pavannani99/Scilab-control-system-toolbox-development-functions/tree/main/blkdiag/DEPENDENCIES
-*/
+function sys = vertcat(varargin)
+// Vertically concatenate LTI systems.
+//
+// Syntax
+//   sys = vertcat(sys1, sys2)
+//   sys = vertcat(sys1, sys2, ..., sysN)
+//
+// Parameters
+// sys1, sys2, ..., sysN: LTI system objects. Input systems to be concatenated vertically.
+// sys: LTI system object. Resulting system with the outputs of all systems concatenated.
+//
+// Description
+// This function vertically concatenates two or more LTI systems. The resulting
+// system has the same number of inputs as the input systems while combining
+// their outputs one below another. All input systems must have the same number
+// of inputs and compatible sampling times.
+//
+// Examples
+// 1) Concatenate two SISO systems:
+//    sys1 = tf([1], [1 1]);
+//    sys2 = tf([2], [1 2]);
+//    sys = vertcat(sys1, sys2)
+//
+//    Output:
+//      1
+//    -----
+//     s+1
+//
+//      2
+//    -----
+//     s+2
+//
+// 2) Concatenate three SISO systems:
+//    sys = vertcat(sys1, sys2, sys3);
+//
+// 3) Concatenate two MIMO systems:
+//    sys = vertcat(sys1, sys2);
 
 function sys = vertcat_lti (sys, varargin)
   for k = 1 : length(varargin)
