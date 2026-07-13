@@ -1,21 +1,26 @@
-/* 2026 Author: Samiksha <samikshaa18@gmail.com> */
-/* westlandlynx.sci
-returns the Westland Lynx helicopter benchmark state-space model */
-/*
-Description:
-      Returns the linearized continuous-time state-space model of the
-      Westland Lynx helicopter. The model is widely used as a benchmark
-      for testing and demonstrating control system analysis, controller
-      design, observer design, and model reduction algorithms.
-
-Calling Sequence:
-      sys = westlandlynx()
-
-Dependencies:
-      None
-*/
-
 function outsys = WestlandLynx()
+// Load the Westland Lynx benchmark model.
+//
+// Syntax
+//   sys = WestlandLynx()
+//
+// Parameters
+// sys: Continuous-time state-space system. The Westland Lynx helicopter benchmark model.
+//
+// Description
+// This function returns the continuous-time state-space representation
+// of the Westland Lynx helicopter benchmark model. The model is widely
+// used in control systems research and education for testing controller
+// design, model reduction, system identification, and robustness analysis.
+//
+// Examples
+//
+// 1) Display the state-space matrices:
+//    sys = WestlandLynx();
+//    disp(sys.A);
+//    disp(sys.B);
+//    disp(sys.C);
+//    disp(sys.D);
 
     if nargin ~= 0 then
         error("Usage: outsys = WestlandLynx()");
