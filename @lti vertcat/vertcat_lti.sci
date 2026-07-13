@@ -36,7 +36,6 @@ function sys = vertcat(varargin)
 // 3) Concatenate two MIMO systems:
 //    sys = vertcat(sys1, sys2);
 
-function sys = vertcat_lti (sys, varargin)
   for k = 1 : length(varargin)
     sys1 = sys;
     sys2 = varargin(k);
