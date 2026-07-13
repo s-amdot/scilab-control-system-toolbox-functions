@@ -15,6 +15,9 @@ function sys = vertcat(varargin)
 // their outputs one below another. All input systems must have the same number
 // of inputs and compatible sampling times.
 //
+// Dependencies
+// __sys_group__ - https://github.com/pavannani99/Scilab-control-system-toolbox-development-functions/tree/main/blkdiag/DEPENDENCIES
+//
 // Examples
 // 1) Concatenate two SISO systems:
 //    sys1 = tf([1], [1 1]);
