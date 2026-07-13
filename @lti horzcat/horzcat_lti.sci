@@ -20,7 +20,12 @@ function sys = horzcat_lti(varargin)
 // 1) Concatenate two SISO systems:
 //    sys1 = tf([1], [1 1]);
 //    sys2 = tf([2], [1 2]);
-//    sys = horzcat_lti(sys1, sys2);
+//    sys = horzcat_lti(sys1, sys2)
+//
+//    Output:
+//      1      2
+//    -----  -----
+//     s+1    s+2
 //
 // 2) Concatenate three SISO systems:
 //    sys = horzcat_lti(sys1, sys2, sys3);
