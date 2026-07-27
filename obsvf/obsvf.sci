@@ -114,3 +114,23 @@ disp("Bc5"); disp(Bc5);
 disp("Cc5"); disp(Cc5);
 disp("Z5"); disp(Z5);
 disp("ncont5"); disp(ncont5);
+
+// Test Case 6
+A = [0 1 0 0;
+     0 0 1 0;
+     0 0 0 1;
+    -4 -6 -4 -1];
+B = [0;
+     0;
+     0;
+     1];
+C = [1 0 0 0;
+     0 0 1 0];
+tol = 1e-4;
+[Ac6,Bc6,Cc6,Z6,ncont6] = obsvf(A,B,C,tol);
+disp("Ac6"); disp(Ac6);
+disp("Bc6"); disp(Bc6);
+disp("Cc6"); disp(Cc6);
+disp("Z6"); disp(Z6);
+disp("ncont6"); disp(ncont6);
+
