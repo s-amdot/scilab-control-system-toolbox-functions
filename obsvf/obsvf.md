@@ -36,121 +36,224 @@
 ## 1
 
 ```scilab
-A1 = [0 1;
-     -2 -3];
-B1 = [0;
-      1];
-C1 = [1 0];
-[Ao1,Bo1,Co1,Z1,Nobs1] = obsvf(A1,B1,C1);
-disp("Test 1:");
-disp("Nobs1:", Nobs1);
-disp("Ao1:", Ao1);
+A = [0 1;
+    -2 -3];
+B = [0;
+     1];
+C = [1 0];
+
+[Ac1,Bc1,Cc1,Z1,ncont1] = obsvf(A,B,C);
+
+disp("Ac1"); disp(Ac1);
+disp("Bc1"); disp(Bc1);
+disp("Cc1"); disp(Cc1);
+disp("Z1"); disp(Z1);
+disp("ncont1"); disp(ncont1);
 ```
 
 ```text
-  "Test 1:"
-  "Nobs1:"
-   2.
-  "Ao1:"
+  "Ac1"
    0.   1.
   -2.  -3.
+  "Bc1"
+   0.
+   1.
+  "Cc1"
+   1.   0.
+  "Z1"
+   1.   0.
+   0.   1.
+  "ncont1"
+   2.
 ```
 
 ## 2
 
 ```scilab
-A2 = [1 0;
-      0 2];
-B2 = [1;
-      0];
-C2 = [1 0];
-[Ao2,Bo2,Co2,Z2,Nobs2] = obsvf(A2,B2,C2);
-disp("Test 2:");
-disp("Nobs2:", Nobs2);
-disp("Ao2:", Ao2);
+A = [0 1;
+    -2 -3];
+B = [0;
+     1];
+C = [1 0];
+tol = 1e-8;
+
+[Ac2,Bc2,Cc2,Z2,ncont2] = obsvf(A,B,C,tol);
+
+disp("Ac2"); disp(Ac2);
+disp("Bc2"); disp(Bc2);
+disp("Cc2"); disp(Cc2);
+disp("Z2"); disp(Z2);
+disp("ncont2"); disp(ncont2);
 ```
 
 ```text
-  "Test 2:"
-  "Nobs2:"
+  "Ac2"
+   0.   1.
+  -2.  -3.
+  "Bc2"
+   0.
    1.
-  "Ao2:"
+  "Cc2"
    1.   0.
-   0.   2.
+  "Z2"
+   1.   0.
+   0.   1.
+  "ncont2"
+   2.
 ```
 
 ## 3
 
 ```scilab
-A3 = [1 2;
-      3 4];
-B3 = [1;
-      0];
-C3 = [0 0];
-[Ao3,Bo3,Co3,Z3,Nobs3] = obsvf(A3,B3,C3);
-disp("Test 3:");
-disp("Nobs3:", Nobs3);
-disp("Ao3:", Ao3);
+A = [1 0;
+     0 2];
+B = [1;
+     1];
+C = [1 0];
+
+[Ac3,Bc3,Cc3,Z3,ncont3] = obsvf(A,B,C);
+
+disp("Ac3"); disp(Ac3);
+disp("Bc3"); disp(Bc3);
+disp("Cc3"); disp(Cc3);
+disp("Z3"); disp(Z3);
+disp("ncont3"); disp(ncont3);
 ```
 
 ```text
-  "Test 3:"
-  "Nobs3:"
-   0.
-  "Ao3:"
-   1.   2.
-   3.   4.
+  "Ac3"
+   1.   0.
+   0.   2.
+  "Bc3"
+   1.
+   1.
+  "Cc3"
+   1.   0.
+  "Z3"
+   1.   0.
+   0.   1.
+  "ncont3"
+   1.
 ```
 
 ## 4
 
 ```scilab
-A4 = [0 1 0;
-      0 0 0;
-      0 0 2];
-B4 = [0;
-      1;
-      0];
-C4 = [1 0 0];
-[Ao4,Bo4,Co4,Z4,Nobs4] = obsvf(A4,B4,C4);
-disp("Test 4:");
-disp("Nobs4:", Nobs4);
-disp("Ao4:", Ao4);
+A = [1 2;
+     3 4];
+B = [1;
+     0];
+C = [0 0];
+
+[Ac4,Bc4,Cc4,Z4,ncont4] = obsvf(A,B,C);
+
+disp("Ac4"); disp(Ac4);
+disp("Bc4"); disp(Bc4);
+disp("Cc4"); disp(Cc4);
+disp("Z4"); disp(Z4);
+disp("ncont4"); disp(ncont4);
 ```
 
 ```text
-  "Test 4:"
-  "Nobs4:"
-   2.
-  "Ao4:"
-   0.   1.   0.
-   0.   0.   0.
-   0.   0.   2.
+  "Ac4"
+   1.   2.
+   3.   4.
+  "Bc4"
+   1.
+   0.
+  "Cc4"
+   0.   0.
+  "Z4"
+   1.   0.
+   0.   1.
+  "ncont4"
+   0.
 ```
 
 ## 5
 
 ```scilab
-A5 = [0 1 0;
-      0 0 1;
-     -1 -5 -6];
-B5 = [0;
-      0;
-      1];
-C5 = [1 0 0;
-      0 1 0];
-[Ao5,Bo5,Co5,Z5,Nobs5] = obsvf(A5,B5,C5);
-disp("Test 5:");
-disp("Nobs5:", Nobs5);
-disp("Ao5:", Ao5);
+A = [0 1 0;
+     0 0 1;
+    -1 -5 -6];
+B = [0;
+     0;
+     1];
+C = [1 0 0;
+     0 1 0];
+
+[Ac5,Bc5,Cc5,Z5,ncont5] = obsvf(A,B,C);
+
+disp("Ac5"); disp(Ac5);
+disp("Bc5"); disp(Bc5);
+disp("Cc5"); disp(Cc5);
+disp("Z5"); disp(Z5);
+disp("ncont5"); disp(ncont5);
 ```
 
 ```text
-  "Test 5:"
-  "Nobs5:"
-   3.
-  "Ao5:"
+  "Ac5"
    0.   1.   0.
    0.   0.   1.
   -1.  -5.  -6.
+  "Bc5"
+   0.
+   0.
+   1.
+  "Cc5"
+   1.   0.   0.
+   0.   1.   0.
+  "Z5"
+   1.   0.   0.
+   0.   1.   0.
+   0.   0.   1.
+  "ncont5"
+   3.
+```
+
+## 6
+
+```scilab
+A = [0 1 0 0;
+     0 0 1 0;
+     0 0 0 1;
+    -4 -6 -4 -1];
+B = [0;
+     0;
+     0;
+     1];
+C = [1 0 0 0;
+     0 0 1 0];
+tol = 1e-4;
+
+[Ac6,Bc6,Cc6,Z6,ncont6] = obsvf(A,B,C,tol);
+
+disp("Ac6"); disp(Ac6);
+disp("Bc6"); disp(Bc6);
+disp("Cc6"); disp(Cc6);
+disp("Z6"); disp(Z6);
+disp("ncont6"); disp(ncont6);
+```
+
+```text
+  "Ac6"
+   0.   0.  -1.   0.
+   0.   0.   0.  -1.
+   0.   1.   0.   0.
+  -4.   4.   6.  -1.
+  "Bc6"
+   0.
+   0.
+   0.
+   1.
+  "Cc6"
+   1.   0.   0.   0.
+   0.  -1.   0.   0.
+  "Z6"
+   1.   0.   0.   0.
+   0.   0.  -1.   0.
+   0.  -1.   0.   0.
+   0.   0.   0.   1.
+  "ncont6"
+   4.
 ```
