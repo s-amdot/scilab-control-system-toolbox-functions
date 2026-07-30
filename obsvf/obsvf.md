@@ -9,10 +9,10 @@
 
 ## Calling Sequence
 
-- `[Ao, Bo, Co, Z, Nobs] = obsvf(A, B, C)`
-- `[Ao, Bo, Co, Z, Nobs] = obsvf(A, B, C, tol)`
-- `[Ao, Bo, Co, Z, Nobs] = obsvf(sys)`
-- `[Ao, Bo, Co, Z, Nobs] = obsvf(sys, tol)`
+- `[Ao, Bo, Co, T, K] = obsvf(A, B, C)`
+- `[Ao, Bo, Co, T, K] = obsvf(A, B, C, tol)`
+- `[Ao, Bo, Co, T, Ks] = obsvf(sys)`
+- `[Ao, Bo, Co, T, K] = obsvf(sys, tol)`
 
 ## Parameters
 
@@ -24,8 +24,8 @@
 - `Ao` - Transformed state matrix in observability staircase form.
 - `Bo` - Transformed input matrix.
 - `Co` - Transformed output matrix.
-- `Z` - Orthogonal transformation matrix such that `Ao = Z'*A*Z`, `Bo = Z'*B`, `Co = C*Z`.
-- `Nobs` - Number of observable states.
+- `T` - Orthogonal transformation matrix such that `Ao = Z'*A*Z`, `Bo = Z'*B`, `Co = C*Z`.
+- `K` - Number of observable states.
 
 ## Dependencies
 - [ctrbf](https://github.com/s-amdot/scilab-control-system-toolbox-functions/blob/main/ctrbf/ctrbf.sci)
