@@ -1,23 +1,49 @@
 /* 2026 Author: Samiksha <samikshaa18@gmail.com> */
-/* obsvf.sci
-   observable staircase form decomposition */
-/*
-Description:
-      Computes the observable staircase decomposition of a state-space
-      system. The function separates the observable and unobservable
-      subspaces by exploiting the duality between observability and
-      controllability.
-      The implementation is based on the controllability staircase
-      decomposition obtained from ctrbf() applied to the transposed
-      system matrices.
-Calling Sequence:
-      [Ao, Bo, Co, T, K] = obsvf(A, B, C)
-      [Ao, Bo, Co, T, K] = obsvf(A, B, C, tol)
-Dependencies:
-      ctrbf- https://github.com/s-amdot/scilab-control-system-toolbox-functions/blob/main/ctrbf/ctrbf.sci
-*/
 
-function [ac, bc, cc, T, K] = obsvf(a, b, c, tol)
+function [ac, bc, cc, T, K] = obsvf(varargin)
+//
+// Observable staircase form decomposition.
+//
+// Syntax
+//   [Ac, Bc, Cc, T, K] = obsvf(A, B, C)
+//   [Ac, Bc, Cc, T, K] = obsvf(A, B, C, tol)
+//   [Ac, Bc, Cc] = obsvf(sys)
+//
+// Parameters
+// A: State matrix.
+// B: Input matrix.
+// C: Output matrix.
+// tol: Real scalar. Tolerance used to determine the numerical rank.
+// sys: LTI system object.
+//
+// Ac: State matrix in observable staircase form.
+// Bc: Input matrix corresponding to Ac.
+// Cc: Output matrix corresponding to Ac.
+// T: State transformation matrix.
+// K: Number of observable states.
+//
+// Description
+// Computes an observable staircase decomposition of a state-space system.
+// The decomposition separates the observable and unobservable state
+// subspaces using a similarity transformation. For LTI system objects,
+// only the transformed system matrices are returned.
+//
+// Dependencies
+// ctrbf- https://github.com/s-amdot/scilab-control-system-toolbox-functions/blob/main/ctrbf/ctrbf.sci
+//
+// Examples
+// 1) Observable decomposition of a state-space system:
+//    A = [0 1; -2 -3];B = [0; 1];C = [1 0];
+//    [Ac, Bc, Cc, T, K] = obsvf(A, B, C);
+//    Output:
+//    Ac =
+//       0.   1.
+//      -2.  -3.
+//    T =
+//       1.   0.
+//       0.   1.
+//    K = 2
+
     if argn(2) < 1 | argn(2) > 4 then
         error("obsvf: wrong number of arguments");
     end
