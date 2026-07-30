@@ -11,7 +11,7 @@
 
 - `[Ao, Bo, Co, T, K] = obsvf(A, B, C)`
 - `[Ao, Bo, Co, T, K] = obsvf(A, B, C, tol)`
-- `[Ao, Bo, Co, T, Ks] = obsvf(sys)`
+- `[Ao, Bo, Co, T, K] = obsvf(sys)`
 - `[Ao, Bo, Co, T, K] = obsvf(sys, tol)`
 
 ## Parameters
@@ -24,7 +24,7 @@
 - `Ao` - Transformed state matrix in observability staircase form.
 - `Bo` - Transformed input matrix.
 - `Co` - Transformed output matrix.
-- `T` - Orthogonal transformation matrix such that `Ao = Z'*A*Z`, `Bo = Z'*B`, `Co = C*Z`.
+- `T` - Orthogonal transformation matrix such that `Ao = T'*A*T`, `Bo = T'*B`, `Co = C*T`.
 - `K` - Number of observable states.
 
 ## Dependencies
