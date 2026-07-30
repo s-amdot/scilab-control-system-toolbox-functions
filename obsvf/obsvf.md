@@ -42,13 +42,13 @@ B = [0;
      1];
 C = [1 0];
 
-[Ac1,Bc1,Cc1,Z1,ncont1] = obsvf(A,B,C);
+[Ac1,Bc1,Cc1,T1,K1] = obsvf(A,B,C);
 
 disp("Ac1"); disp(Ac1);
 disp("Bc1"); disp(Bc1);
 disp("Cc1"); disp(Cc1);
-disp("Z1"); disp(Z1);
-disp("ncont1"); disp(ncont1);
+disp("T1"); disp(T1);
+disp("K1"); disp(K1);
 ```
 
 ```text
@@ -60,10 +60,10 @@ disp("ncont1"); disp(ncont1);
    1.
   "Cc1"
    1.   0.
-  "Z1"
+  "T1"
    1.   0.
    0.   1.
-  "ncont1"
+  "K1"
    2.
 ```
 
@@ -77,13 +77,13 @@ B = [0;
 C = [1 0];
 tol = 1e-8;
 
-[Ac2,Bc2,Cc2,Z2,ncont2] = obsvf(A,B,C,tol);
+[Ac2,Bc2,Cc2,T2,K2] = obsvf(A,B,C,tol);
 
 disp("Ac2"); disp(Ac2);
 disp("Bc2"); disp(Bc2);
 disp("Cc2"); disp(Cc2);
-disp("Z2"); disp(Z2);
-disp("ncont2"); disp(ncont2);
+disp("T2"); disp(T2);
+disp("K2"); disp(K2);
 ```
 
 ```text
@@ -95,10 +95,10 @@ disp("ncont2"); disp(ncont2);
    1.
   "Cc2"
    1.   0.
-  "Z2"
+  "T2"
    1.   0.
    0.   1.
-  "ncont2"
+  "K2"
    2.
 ```
 
@@ -111,13 +111,13 @@ B = [1;
      1];
 C = [1 0];
 
-[Ac3,Bc3,Cc3,Z3,ncont3] = obsvf(A,B,C);
+[Ac3,Bc3,Cc3,T3,K3] = obsvf(A,B,C);
 
 disp("Ac3"); disp(Ac3);
 disp("Bc3"); disp(Bc3);
 disp("Cc3"); disp(Cc3);
-disp("Z3"); disp(Z3);
-disp("ncont3"); disp(ncont3);
+disp("T3"); disp(T3);
+disp("K3"); disp(K3);
 ```
 
 ```text
@@ -129,10 +129,10 @@ disp("ncont3"); disp(ncont3);
    1.
   "Cc3"
    1.   0.
-  "Z3"
+  "T3"
    1.   0.
    0.   1.
-  "ncont3"
+  "K3"
    1.
 ```
 
@@ -145,13 +145,13 @@ B = [1;
      0];
 C = [0 0];
 
-[Ac4,Bc4,Cc4,Z4,ncont4] = obsvf(A,B,C);
+[Ac4,Bc4,Cc4,T4,K4] = obsvf(A,B,C);
 
 disp("Ac4"); disp(Ac4);
 disp("Bc4"); disp(Bc4);
 disp("Cc4"); disp(Cc4);
-disp("Z4"); disp(Z4);
-disp("ncont4"); disp(ncont4);
+disp("T4"); disp(T4);
+disp("K4"); disp(K4);
 ```
 
 ```text
@@ -163,10 +163,10 @@ disp("ncont4"); disp(ncont4);
    0.
   "Cc4"
    0.   0.
-  "Z4"
+  "T4"
    1.   0.
    0.   1.
-  "ncont4"
+  "K4"
    0.
 ```
 
@@ -182,13 +182,13 @@ B = [0;
 C = [1 0 0;
      0 1 0];
 
-[Ac5,Bc5,Cc5,Z5,ncont5] = obsvf(A,B,C);
+[Ac5,Bc5,Cc5,T5,K5] = obsvf(A,B,C);
 
 disp("Ac5"); disp(Ac5);
 disp("Bc5"); disp(Bc5);
 disp("Cc5"); disp(Cc5);
-disp("Z5"); disp(Z5);
-disp("ncont5"); disp(ncont5);
+disp("T5"); disp(T5);
+disp("K5"); disp(K5);
 ```
 
 ```text
@@ -203,11 +203,11 @@ disp("ncont5"); disp(ncont5);
   "Cc5"
    1.   0.   0.
    0.   1.   0.
-  "Z5"
+  "T5"
    1.   0.   0.
    0.   1.   0.
    0.   0.   1.
-  "ncont5"
+  "K5"
    3.
 ```
 
@@ -226,13 +226,13 @@ C = [1 0 0 0;
      0 0 1 0];
 tol = 1e-4;
 
-[Ac6,Bc6,Cc6,Z6,ncont6] = obsvf(A,B,C,tol);
+[Ac6,Bc6,Cc6,T6,K6] = obsvf(A,B,C,tol);
 
 disp("Ac6"); disp(Ac6);
 disp("Bc6"); disp(Bc6);
 disp("Cc6"); disp(Cc6);
-disp("Z6"); disp(Z6);
-disp("ncont6"); disp(ncont6);
+disp("T6"); disp(T6);
+disp("K6"); disp(K6);
 ```
 
 ```text
@@ -249,11 +249,11 @@ disp("ncont6"); disp(ncont6);
   "Cc6"
    1.   0.   0.   0.
    0.  -1.   0.   0.
-  "Z6"
+  "T6"
    1.   0.   0.   0.
    0.   0.  -1.   0.
    0.  -1.   0.   0.
    0.   0.   0.   1.
-  "ncont6"
+  "K6"
    4.
 ```
