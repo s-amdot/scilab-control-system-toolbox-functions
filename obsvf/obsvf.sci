@@ -11,8 +11,8 @@ Description:
       decomposition obtained from ctrbf() applied to the transposed
       system matrices.
 Calling Sequence:
-      [Ao, Bo, Co, T, nobsv] = obsvf(A, B, C)
-      [Ao, Bo, Co, T, nobsv] = obsvf(A, B, C, tol)
+      [Ao, Bo, Co, T, K] = obsvf(A, B, C)
+      [Ao, Bo, Co, T, K] = obsvf(A, B, C, tol)
 Dependencies:
       ctrbf- https://github.com/s-amdot/scilab-control-system-toolbox-functions/blob/main/ctrbf/ctrbf.sci
 */
