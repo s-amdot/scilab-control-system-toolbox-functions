@@ -1,13 +1,12 @@
 /* 2026 Author: Samiksha <samikshaa18@gmail.com> */
 //
-function [Abar, Bbar, Cbar, T, K] = obsvf(a, b, c, tol)
-//
+function [ac, bc, cc, z, ncont] = obsvf(a, b, c, tol)
 // Observable staircase form decomposition.
 //
 // Syntax
-//   [Abar, Bbar, Cbar, T, K] = obsvf(A, B, C)
-//   [Abar, Bbar, Cbar, T, K] = obsvf(A, B, C, tol)
-//   [Abar, Bbar, Cbar] = obsvf(sys)
+//   [ac, bc, cc, z, ncont] = obsvf(A, B, C)
+//   [ac, bc, cc, z, ncont] = obsvf(A, B, C, tol)
+//   [ac, bc, cc] = obsvf(sys)
 //
 // Parameters
 //   A: State matrix.
@@ -16,14 +15,14 @@ function [Abar, Bbar, Cbar, T, K] = obsvf(a, b, c, tol)
 //   tol: Real scalar. Tolerance used to determine the numerical rank.
 //   sys: LTI system object.
 //
-//   Abar: State matrix in observable staircase form.
-//   Bbar: Input matrix corresponding to Abar.
-//   Cbar: Output matrix corresponding to Abar.
-//   T: State transformation matrix.
-//   K: Number of observable states.
+//   ac: State matrix in observable staircase form.
+//   bc: Input matrix corresponding to ac.
+//   cc: Output matrix corresponding to ac.
+//   z: State transformation matrix.
+//   ncont: Number of observable states.
 //
 // Description
-//   Computes the observable staircase decomposition of a state-space
+//   Computes an observable staircase decomposition of a state-space
 //   system. The decomposition separates the observable and
 //   unobservable state subspaces using a similarity transformation.
 //   For LTI system objects, only the transformed system matrices are
@@ -32,6 +31,24 @@ function [Abar, Bbar, Cbar, T, K] = obsvf(a, b, c, tol)
 // Dependencies
 //   ctrbf - https://github.com/s-amdot/scilab-control-system-toolbox-functions/blob/main/ctrbf/ctrbf.sci
 //
+// Examples
+// 1) Observable decomposition of a state-space system:
+//    A = [0 1; -2 -3];
+//    B = [0; 1];
+//    C = [1 0];
+//    [ac, bc, cc, z, ncont] = obsvf(A, B, C);
+//
+//    Output:
+//    ac =
+//       0.   1.
+//      -2.  -3.
+//
+//    z =
+//       1.   0.
+//       0.   1.
+//
+//    ncont = 2
+//
     if argn(2) < 1 | argn(2) > 4 then
         error("obsvf: wrong number of arguments");
     end
@@ -39,40 +56,28 @@ function [Abar, Bbar, Cbar, T, K] = obsvf(a, b, c, tol)
     if argn(2) < 2 then
         b = [];
     end
-
     if argn(2) < 4 then
         tol = [];
     end
 
     if typeof(a) == "state-space" | typeof(a) == "rational" then
-
         if argn(2) > 2 then
-            error("too many inputs for LTI form");
+            error("obsvf: too many inputs for LTI form");
         end
-
-        [Abar, Bbar, Cbar] = ctrbf(a.', b);
-
-        Abar = Abar.';
-        T = [];
-        K = [];
-
+        [ac, bc, cc] = ctrbf(a.', b);
+        ac = ac.';
+        z = []; ncont = [];
     else
-
         if argn(2) < 3 then
-            error("requires A, B, C");
+            error("obsvf: requires at least 3 inputs");
         end
-
-        [Abar, tmp, Cbar, T, K] = ctrbf(a.', c.', b.', tol);
-
-        Abar = Abar.';
-        Bbar = Cbar.';
-        Cbar = tmp.';
-
+        [ac, tmp, cc, z, ncont] = ctrbf(a.', c.', b.', tol);
+        ac = ac.';
+        bc = cc.';
+        cc = tmp.';
     end
 
 endfunction
-
-
 // Test Case 1
 A = [0 1;
     -2 -3];
