@@ -78,6 +78,8 @@ function [ac, bc, cc, z, ncont] = obsvf(a, b, c, tol)
     end
 
 endfunction
+
+
 // Test Case 1
 A = [0 1;
     -2 -3];
@@ -85,25 +87,25 @@ B = [0;
      1];
 C = [1 0];
 
-[Ac1,Bc1,Cc1,T1,K1] = obsvf(A,B,C);
+[Ac1,Bc1,Cc1,Z1,Ncont1] = obsvf(A,B,C);
 
 disp("Ac1"); disp(Ac1);
 disp("Bc1"); disp(Bc1);
 disp("Cc1"); disp(Cc1);
-disp("T1"); disp(T1);
-disp("K1"); disp(K1);
+disp("Z1"); disp(Z1);
+disp("Ncont1"); disp(Ncont1);
 
 
 // Test Case 2
 tol = 1e-8;
 
-[Ac2,Bc2,Cc2,T2,K2] = obsvf(A,B,C,tol);
+[Ac2,Bc2,Cc2,Z2,Ncont2] = obsvf(A,B,C,tol);
 
 disp("Ac2"); disp(Ac2);
 disp("Bc2"); disp(Bc2);
 disp("Cc2"); disp(Cc2);
-disp("T2"); disp(T2);
-disp("K2"); disp(K2);
+disp("Z2"); disp(Z2);
+disp("Ncont2"); disp(Ncont2);
 
 
 // Test Case 3
@@ -113,13 +115,13 @@ B = [1;
      1];
 C = [1 0];
 
-[Ac3,Bc3,Cc3,T3,K3] = obsvf(A,B,C);
+[Ac3,Bc3,Cc3,Z3,Ncont3] = obsvf(A,B,C);
 
 disp("Ac3"); disp(Ac3);
 disp("Bc3"); disp(Bc3);
 disp("Cc3"); disp(Cc3);
-disp("T3"); disp(T3);
-disp("K3"); disp(K3);
+disp("Z3"); disp(Z3);
+disp("Ncont3"); disp(Ncont3);
 
 
 // Test Case 4
@@ -129,13 +131,13 @@ B = [1;
      0];
 C = [0 0];
 
-[Ac4,Bc4,Cc4,T4,K4] = obsvf(A,B,C);
+[Ac4,Bc4,Cc4,Z4,Ncont4] = obsvf(A,B,C);
 
 disp("Ac4"); disp(Ac4);
 disp("Bc4"); disp(Bc4);
 disp("Cc4"); disp(Cc4);
-disp("T4"); disp(T4);
-disp("K4"); disp(K4);
+disp("Z4"); disp(Z4);
+disp("Ncont4"); disp(Ncont4);
 
 
 // Test Case 5
@@ -148,13 +150,13 @@ B = [0;
 C = [1 0 0;
      0 1 0];
 
-[Ac5,Bc5,Cc5,T5,K5] = obsvf(A,B,C);
+[Ac5,Bc5,Cc5,Z5,Ncont5] = obsvf(A,B,C);
 
 disp("Ac5"); disp(Ac5);
 disp("Bc5"); disp(Bc5);
 disp("Cc5"); disp(Cc5);
-disp("T5"); disp(T5);
-disp("K5"); disp(K5);
+disp("Z5"); disp(Z5);
+disp("Ncont5"); disp(Ncont5);
 
 
 // Test Case 6
@@ -170,18 +172,11 @@ C = [1 0 0 0;
      0 0 1 0];
 tol = 1e-4;
 
-[Ac6,Bc6,Cc6,T6,K6] = obsvf(A,B,C,tol);
+[Ac6,Bc6,Cc6,Z6,Ncont6] = obsvf(A,B,C,tol);
 
 disp("Ac6"); disp(Ac6);
 disp("Bc6"); disp(Bc6);
 disp("Cc6"); disp(Cc6);
-disp("T6"); disp(T6);
-disp("K6"); disp(K6);
+disp("Z6"); disp(Z6);
+disp("Ncont6"); disp(Ncont6);
 
-A = [1 0;
-     0 2];
-
-B = [1;
-     1];
-
-C = [1 0];
