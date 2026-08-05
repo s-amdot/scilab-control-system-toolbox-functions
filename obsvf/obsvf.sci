@@ -1,77 +1,77 @@
 /* 2026 Author: Samiksha <samikshaa18@gmail.com> */
-
-function [ac, bc, cc, T, K] = obsvf(varargin)
+//
+function [Abar, Bbar, Cbar, T, K] = obsvf(a, b, c, tol)
 //
 // Observable staircase form decomposition.
 //
 // Syntax
-//   [Ac, Bc, Cc, T, K] = obsvf(A, B, C)
-//   [Ac, Bc, Cc, T, K] = obsvf(A, B, C, tol)
-//   [Ac, Bc, Cc] = obsvf(sys)
+//   [Abar, Bbar, Cbar, T, K] = obsvf(A, B, C)
+//   [Abar, Bbar, Cbar, T, K] = obsvf(A, B, C, tol)
+//   [Abar, Bbar, Cbar] = obsvf(sys)
 //
 // Parameters
-// A: State matrix.
-// B: Input matrix.
-// C: Output matrix.
-// tol: Real scalar. Tolerance used to determine the numerical rank.
-// sys: LTI system object.
+//   A: State matrix.
+//   B: Input matrix.
+//   C: Output matrix.
+//   tol: Real scalar. Tolerance used to determine the numerical rank.
+//   sys: LTI system object.
 //
-// Ac: State matrix in observable staircase form.
-// Bc: Input matrix corresponding to Ac.
-// Cc: Output matrix corresponding to Ac.
-// T: State transformation matrix.
-// K: Number of observable states.
+//   Abar: State matrix in observable staircase form.
+//   Bbar: Input matrix corresponding to Abar.
+//   Cbar: Output matrix corresponding to Abar.
+//   T: State transformation matrix.
+//   K: Number of observable states.
 //
 // Description
-// Computes an observable staircase decomposition of a state-space system.
-// The decomposition separates the observable and unobservable state
-// subspaces using a similarity transformation. For LTI system objects,
-// only the transformed system matrices are returned.
+//   Computes the observable staircase decomposition of a state-space
+//   system. The decomposition separates the observable and
+//   unobservable state subspaces using a similarity transformation.
+//   For LTI system objects, only the transformed system matrices are
+//   returned.
 //
 // Dependencies
-// ctrbf- https://github.com/s-amdot/scilab-control-system-toolbox-functions/blob/main/ctrbf/ctrbf.sci
+//   ctrbf - https://github.com/s-amdot/scilab-control-system-toolbox-functions/blob/main/ctrbf/ctrbf.sci
 //
-// Examples
-// 1) Observable decomposition of a state-space system:
-//    A = [0 1; -2 -3];B = [0; 1];C = [1 0];
-//    [Ac, Bc, Cc, T, K] = obsvf(A, B, C);
-//    Output:
-//    Ac =
-//       0.   1.
-//      -2.  -3.
-//    T =
-//       1.   0.
-//       0.   1.
-//    K = 2
-
     if argn(2) < 1 | argn(2) > 4 then
         error("obsvf: wrong number of arguments");
     end
+
     if argn(2) < 2 then
         b = [];
     end
+
     if argn(2) < 4 then
         tol = [];
     end
+
     if typeof(a) == "state-space" | typeof(a) == "rational" then
 
         if argn(2) > 2 then
             error("too many inputs for LTI form");
         end
-        [ac, bc, cc] = ctrbf(a.', b);
-        ac = ac.';
+
+        [Abar, Bbar, Cbar] = ctrbf(a.', b);
+
+        Abar = Abar.';
         T = [];
         K = [];
+
     else
+
         if argn(2) < 3 then
             error("requires A, B, C");
         end
-        [ac, tmp, cc, T, K] = ctrbf(a.', c.', b.', tol);
-        ac = ac.';
-        bc = cc.';
-        cc = tmp.';
+
+        [Abar, tmp, Cbar, T, K] = ctrbf(a.', c.', b.', tol);
+
+        Abar = Abar.';
+        Bbar = Cbar.';
+        Cbar = tmp.';
+
     end
+
 endfunction
+
 
 // Test Case 1
 A = [0 1;
@@ -172,3 +172,11 @@ disp("Bc6"); disp(Bc6);
 disp("Cc6"); disp(Cc6);
 disp("T6"); disp(T6);
 disp("K6"); disp(K6);
+
+A = [1 0;
+     0 2];
+
+B = [1;
+     1];
+
+C = [1 0];
